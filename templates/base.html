@@ -8,4 +8,37 @@
 <body>
     
 </body>
-</html>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>  {% block titulo %} Tienda Online {% endblock %}  </title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css')}}">
+</head>
+<body>
+    <header>
+        {% block header %}
+            <h1></h1>
+        {% endblock %}
+    </header>
+    <nav>
+        {% block nav %}
+            <a href="{{ url_for('')}}"></a>
+            <a href="{{ url_for('')}}"></a>
+            <a href="{{ url_for('') }}"></a>
+            <a href="{{ url_for('')}}"></a>
+            <a href="{{ url_for('')}}"></a>
+        {% endblock %}
+    </nav>
+    <main>
+        {% block main %}
+            contenido principal
+        {% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}
+            <p>Footer</p>
+        {% endblock %}
+    </footer>
+</body>
