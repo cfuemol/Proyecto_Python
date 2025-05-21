@@ -1,4 +1,5 @@
 class Transaccion:
+    #Constructor de la clase
     def __init__(self,id_transaccion:int,id_cuenta_origen:int,id_cuenta_destino:int,fecha:str,concepto:str,monto:float):
         self.__id_transaccion = id_transaccion
         self.__id_cuenta_origen = id_cuenta_origen
@@ -50,6 +51,7 @@ class Transaccion:
     def set_monto(self, monto_nuevo:float):
         self.__monto = monto_nuevo
 
+    #STR
     def __str__(self):
         return (f'TRANSACCIÓN \nID Transacción: {self.__id_transaccion}, ID Cuenta Origen: {self.__id_cuenta_origen}, ID Cuenta Destino: {self.__id_cuenta_destino}, Fecha: {self.__fecha}, Concepto: {self.__concepto}, Monto: {self.__monto}.')
     

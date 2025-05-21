@@ -67,6 +67,7 @@ class Usuario:
     def set_rol(self, rol_nuevo:str):
         self.__rol = rol_nuevo
 
+    #STR
     def __str__(self):
         return (f'USUARIO \nDNI: {self.__dni}, Nombre: {self.__nombre}, Apellidos: {self.__apellidos}, Teléfono: {self.__telefono}, E-mail: {self.__email}, User Name: {self.__user_name}, Password: {self.__password}, Rol: {self.__rol}')
     
