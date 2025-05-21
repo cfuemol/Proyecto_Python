@@ -1,11 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/styles_register.css">
+    <title>Register</title>
 </head>
 <body>
-    
+
+    <div class="form-container">
+    <input checked="" type="checkbox" id="switch" />
+    <div class="sign-up-container">
+        <span class="form-title">Sign Up</span>
+        <label for="switch" class="switch-label">Already have an account?</label>
+        <form class="sign-up-form">
+        <label for="username-sign-up">Username</label>
+        <input
+            class="input"
+            placeholder="Francisco"
+            id="username-sign-up"
+            name="Username"
+            type="text"
+        />
+        <label for="DNI-sign-up">DNI</label>
+        <input
+            class="input"
+            placeholder="XXXXXXXXA"
+            id="DNI-sign-up"
+            name="DNI"
+            type="text"
+        />
+        <label for="phone-sign-up">Phone Number</label>
+        <input
+            class="input"
+            placeholder="937014628"
+            id="phone-sign-up"
+            name="phone"
+            type="number"
+        />
+        <label for="email-sign-up">Email</label>
+        <input
+            class="input"
+            placeholder="ouremail@example.com"
+            id="email-sign-up"
+            name="Email"
+            type="email"
+        />
+        <label for="pwd-sign-up">Password</label>
+        <input
+            class="input"
+            placeholder="••••••••"
+            id="pwd-sign-up"
+            name="Password"
+            type="password"
+        />
+        <label for="confirm-pwd-sign-up">Confirm Password</label>
+        <input
+            class="input"
+            placeholder="••••••••"
+            id="confirm-pwd-sign-up"
+            name="Password"
+            type="password"
+        />
+        <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <div class="log-in-container">
+        <span class="form-title">Login</span>
+        <label for="switch" class="switch-label">Don't have an account?</label>
+        <form class="log-in-form">
+        <label for="username-log-in">Username</label>
+        <input
+            class="input"
+            placeholder="Francisco"
+            id="username-log-in"
+            name="Username"
+            type="text"
+        />
+        <label for="pwd-log-in">Password</label>
+        <input
+            class="input"
+            placeholder="••••••••"
+            id="pwd-log-in"
+            name="Password"
+            type="password"
+        />
+        
+        <button type="submit">Login</button>
+        </form>
+    </div>
+    </div>
 </body>
 </html>
