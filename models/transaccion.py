@@ -30,21 +30,21 @@ class Transaccion:
     def set_id_cuenta_destino(self,id_cuenta_destino_nuevo:int):
         self.__id_cuenta_destino = id_cuenta_destino_nuevo
 
-    #Fecha
+    #Fecha de la transacción
     def get_fecha(self):
         return self.__fecha
     
     def set_fecha(self, fecha_nuevo:str):
         self.__fecha = fecha_nuevo
 
-    #Concepto
+    #Concepto de la transacción
     def get_concepto(self):
         return self.__concepto
     
     def set_concepto(self,concepto_nuevo:str):
         self.__concepto = concepto_nuevo
 
-    #Monto
+    #Monto:Cantidad de la transacción
     def get_monto(self):
         return self.__monto
     
