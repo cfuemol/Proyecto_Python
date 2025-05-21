@@ -3,8 +3,27 @@ from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def login():
+    if request.method == 'POST':
+        formulario = request.form.get('formulario')
+        if formulario =='sign-up':
+            username = request.form.get('Username')
+            dni = request.form.get('DNI')
+            telefono = request.form.get('phone')
+            email = request.form.get('Email')
+            password = pbkdf2_sha256.hash(request.form.get('Password'))
+            conf_password = pbkdf2_sha256.hash (request.form.get('Conf_password'))
+
+        
+        elif formulario == 'log-in':
+            username = request.form.get('Username')
+            password = request.form.get('Password')
+        
+
+        
+    
+
     return render_template('login.html')
 
 @app.route('/dashboard_cliente')
