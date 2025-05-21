@@ -27,7 +27,7 @@ class BaseDatos:
                 email TEXT UNIQUE,
                 nombre_usuario TEXT UNIQUE NOT NULL,
                 passw TEXT NOT NULL,
-                rol TEXT DEFAULT '' CHECK (rol IN('admin','empleado','cliente',''))
+                rol TEXT DEFAULT 'cliente' CHECK (rol IN('admin','empleado','cliente'))
                 );
 
             CREATE TABLE IF NOT EXISTS cuentas_bancarias(
