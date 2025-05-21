@@ -6,6 +6,9 @@ from datetime import datetime
 
 ### Consultas del Administrador del Sistema ###
 ### Consultas del Empleado ###
+
+    ## Empleado usa consultar_cuenta_cliente para buscar ##
+
 ### Consultas del Usuario - Cliente ###
 
 def consultar_cuenta_cliente(dni):
@@ -87,3 +90,38 @@ def hacer_transferencia(origen,destino,concepto,monto):
     finally:
         if db:
             db.cerrar.conexion()
+
+def operacion_efectivo(origen,monto,opcion):
+
+    try:
+        if opcion == 'ingresar':
+            db = BaseDatos()
+            actualizar_saldo = """UPDATE cuentas_bancarias SET saldo = saldo + ? WHERE id_cuenta = ?;"""
+
+            db.ejecutar_consulta(actualizar_saldo,(monto,origen))
+            db.cerrar_conexion()
+
+        elif opcion == 'retirar':
+            
+            # Verificar si el saldo de la cuenta es suficiente para hacer la operacion
+            resultado = db.ejecutar_consulta('SELECT saldo FROM cuentas_bancarias WHERE id_cuenta = ?',(origen,))
+            
+            if resultado[0][0] < monto:
+                raise ValueError('Saldo insuficiente en la cuenta de origen') 
+            
+            actualizar_saldo = """UPDATE cuentas_bancarias SET saldo = saldo - ? WHERE id_cuenta = ?;"""
+
+            db.ejecutar_consulta(actualizar_saldo,(monto,origen))
+            db.cerrar_conexion()
+
+    except Exception as e:
+        if db:
+            db.ejecutar_consulta('ROLLBACK')
+
+        print(f'\n¡¡¡ERROR al realizar la transferencia!!!\nDetalles: {e}')
+
+    finally:
+        if db:
+            db.cerrar.conexion()
+
+
