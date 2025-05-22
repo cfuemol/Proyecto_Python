@@ -4,11 +4,14 @@ from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 
+<<<<<<< Updated upstream
 bd = BaseDatos()
 
 usuarios_col = bd.obtener_colecciones('usuarios')
 cuentas_col = bd.obtener_colecciones('cuenta_bancaria')
 transacciones_col = bd.obtener_colecciones('transacciones')
+=======
+>>>>>>> Stashed changes
 
 @app.route('/', methods=['GET','POST'])
 def login():
@@ -22,9 +25,13 @@ def login():
             password = pbkdf2_sha256.hash(request.form.get('Password'))
             conf_password = pbkdf2_sha256.hash (request.form.get('Conf_password'))
 
+<<<<<<< Updated upstream
             bd.insertar_admin(user)
 
         
+=======
+            
+>>>>>>> Stashed changes
         elif formulario == 'log-in':
             username = request.form.get('Username')
             password = request.form.get('Password')
