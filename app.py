@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from models.database import BaseDatos
 from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
@@ -39,4 +40,6 @@ def dashboard_empleado():
     return render_template('dashboard_empleado.html')
 if __name__== '__main__':
     app.run()
+    BaseDatos.inicializar_colecciones()
+    BaseDatos.insertar_admin()
 
