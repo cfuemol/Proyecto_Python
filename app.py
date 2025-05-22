@@ -43,7 +43,7 @@ def login():
             password = request.form.get['Password']
         
 
-        
+        bd.insertar_user(dict_usuario)
     
 
     return render_template('login.html')

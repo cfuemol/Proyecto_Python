@@ -49,6 +49,9 @@ class BaseDatos:
         else:
             print("⚠️ La colección 'usuarios' ya contiene registros.")
 
+    def insertar_user(self, user):
+        self.db['usuarios'].insert_one(user)
+
     # Nos devuelve la coleccion (tabla) cuyo nombre le especifiquemos
     def obtener_colecciones(self,nombre):
         return self.db[nombre]
