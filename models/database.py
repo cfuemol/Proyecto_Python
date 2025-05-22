@@ -52,6 +52,34 @@ class BaseDatos:
     def insertar_user(self, user):
         self.db['usuarios'].insert_one(user)
 
+    def lista_usuarios(self,usuarios):
+        return list(usuarios.find())
+    
+    def comprueba_registro(self, lista_usuarios, usuario):
+
+        ### Devuelve un valor en función del error ###
+
+        for usuario in lista_usuarios:
+            if usuario['dni'] == usuario['dni']:
+                return 1
+
+            elif usuario['telefono'] == usuario['telefono']:
+                return 2
+
+            elif usuario['email'] == usuario['email']:
+                return 3
+
+            elif usuario['username'] == usuario['username']:
+                return 4
+            
+        return 0
+
+    def lista_cuentas(self,cuentas):
+        return list(cuentas.find())
+
+    def lista_transacciones(self,transacciones):
+        return list(transacciones.find())
+
     # Nos devuelve la coleccion (tabla) cuyo nombre le especifiquemos
     def obtener_colecciones(self,nombre):
         return self.db[nombre]

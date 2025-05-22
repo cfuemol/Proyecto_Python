@@ -12,49 +12,77 @@ transacciones_col = bd.obtener_colecciones('transacciones')
 
 @app.route('/', methods=['GET','POST'])
 def login():
+    
     if request.method == 'POST':
         formulario = request.form.get['formulario']
-        if formulario =='sign-up':
-            username = request.form.get['Username']
-            nombre = request.form.get['nombre']
-            apellidos = request.form.get['apellidos']
-            dni = request.form.get['DNI']
-            telefono = request.form.get['phone']
-            email = request.form.get['Email']
-            password = request.form.get['Password']
-            conf_password = request.form.get['Conf_password']
-            if password == conf_password:
-                password_hash= pbkdf2_sha256.hash(password)
+        
+        ### REGISTRO DE USUARIO ###        
 
-                dict_usuario = {
-                    'dni' : dni,
-                    'nombre' : nombre,
-                    'apellidos' : apellidos,
-                    'telefono' : telefono,
-                    'email' : email,
-                    'username' : username,
-                    'password' : password_hash,
-                    'rol' : 'cliente'
-                }
+        if formulario =='registro':
+            passwd = request.form.get('passwd')
+
+            # Hash de la contraseña #
+            passwd_hash = pbkdf2_sha256.hash(passwd)
+
+            # Crear diccionario con los datos de registro #
+            dict_usuario = {
+                'dni' : request.form.get('dni'),
+                'nombre' : request.form.get('nombre'),
+                'apellidos' : request.form.get('apellidos'),
+                'telefono' : request.form.get('telefono'),
+                'email' : request.form.get('email'),
+                'username' : request.form.get('username'),
+                'password' : passwd_hash,
+                'rol' : 'cliente'
+            }
+
+            # Usuarios en formato lista
+            usuarios = bd.lista_usuarios(usuarios_col)
+
+            verifica = bd.comprueba_registro(usuarios,dict_usuario)
+
+            match verifica:
+                case 1:
+                    flash('Ya existe un usuario con ese DNI')
+                
+                case 2:
+                    flash('Ya existe un usuario con ese telefono')
+                
+                case 3:
+                    flash('Ya existe un usuario con ese email')
+
+                case 4:
+                    flash('Ya existe un usuario con ese username')
+                
+                case 0:
+                    flash('Usuario registrado correctamente')
+                    bd.insertar_user(dict_usuario)
+                    redirect(url_for('dashboard_cliente'))
+
+
+
                 
             
         elif formulario == 'log-in':
             username = request.form.get['Username']
             password = request.form.get['Password']
-        
 
-        bd.insertar_user(dict_usuario)
-    
 
     return render_template('login.html')
 
+# END POINTS CLIENTES #
+
 @app.route('/dashboard_cliente')
 def dashboard_cliente():
-    return render_template('dashboard_cliente.html')
+    return render_template('dashboard_cliente.html', cliente=cliente)
+
+# END POINTS ADMINISTRADOR #
 
 @app.route('/dashboard_admin')
 def dashboard_admin():
     return render_template('dashboard_admin.html')
+
+# END POINTS EMPLEADOS #
 
 @app.route('/dashboard_empleado')
 def dashboard_empleado():
