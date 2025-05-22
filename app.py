@@ -13,19 +13,34 @@ transacciones_col = bd.obtener_colecciones('transacciones')
 @app.route('/', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        formulario = request.form.get('formulario')
+        formulario = request.form.get['formulario']
         if formulario =='sign-up':
-            username = request.form.get('Username')
-            dni = request.form.get('DNI')
-            telefono = request.form.get('phone')
-            email = request.form.get('Email')
-            password = pbkdf2_sha256.hash(request.form.get('Password'))
-            conf_password = pbkdf2_sha256.hash (request.form.get('Conf_password'))
+            username = request.form.get['Username']
+            nombre = request.form.get['nombre']
+            apellidos = request.form.get['apellidos']
+            dni = request.form.get['DNI']
+            telefono = request.form.get['phone']
+            email = request.form.get['Email']
+            password = request.form.get['Password']
+            conf_password = request.form.get['Conf_password']
+            if password == conf_password:
+                password_hash= pbkdf2_sha256.hash(password)
 
+                dict_usuario = {
+                    'dni' : dni,
+                    'nombre' : nombre,
+                    'apellidos' : apellidos,
+                    'telefono' : telefono,
+                    'email' : email,
+                    'username' : username,
+                    'password' : password_hash,
+                    'rol' : 'cliente'
+                }
+                
             
         elif formulario == 'log-in':
-            username = request.form.get('Username')
-            password = request.form.get('Password')
+            username = request.form.get['Username']
+            password = request.form.get['Password']
         
 
         
