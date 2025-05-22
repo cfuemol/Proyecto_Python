@@ -55,21 +55,21 @@ class BaseDatos:
     def lista_usuarios(self,usuarios):
         return list(usuarios.find())
     
-    def comprueba_registro(self, lista_usuarios, usuario):
+    def comprueba_registro(self, lista_usuarios, registro):
 
         ### Devuelve un valor en función del error ###
 
         for usuario in lista_usuarios:
-            if usuario['dni'] == usuario['dni']:
+            if usuario['dni'] == registro['dni']:
                 return 1
 
-            elif usuario['telefono'] == usuario['telefono']:
+            elif usuario['telefono'] == registro['telefono']:
                 return 2
 
-            elif usuario['email'] == usuario['email']:
+            elif usuario['email'] == registro['email']:
                 return 3
 
-            elif usuario['username'] == usuario['username']:
+            elif usuario['username'] == registro['username']:
                 return 4
             
         return 0

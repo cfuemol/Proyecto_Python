@@ -26,12 +26,12 @@ def login():
 
             # Crear diccionario con los datos de registro #
             dict_usuario = {
-                'dni' : request.form.get('dni'),
-                'nombre' : request.form.get('nombre'),
-                'apellidos' : request.form.get('apellidos'),
+                'dni' : request.form.get('dni').upper(),
+                'nombre' : request.form.get('nombre').title(),
+                'apellidos' : request.form.get('apellidos').title(),
                 'telefono' : request.form.get('telefono'),
-                'email' : request.form.get('email'),
-                'username' : request.form.get('username'),
+                'email' : request.form.get('email').lower(),
+                'username' : request.form.get('username').lower(),
                 'password' : passwd_hash,
                 'rol' : 'cliente'
             }
@@ -55,11 +55,9 @@ def login():
                     flash('Ya existe un usuario con ese username')
                 
                 case 0:
-                    flash('Usuario registrado correctamente')
                     bd.insertar_user(dict_usuario)
-                    redirect(url_for('dashboard_cliente'))
-
-
+                    flash('Usuario registrado correctamente')
+                    return redirect(url_for('login'))
 
                 
             
