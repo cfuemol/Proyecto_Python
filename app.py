@@ -4,6 +4,12 @@ from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 
+bd = BaseDatos()
+
+usuarios_col = bd.obtener_colecciones('usuarios')
+cuentas_col = bd.obtener_colecciones('cuenta_bancaria')
+transacciones_col = bd.obtener_colecciones('transacciones')
+
 @app.route('/', methods=['GET','POST'])
 def login():
     if request.method == 'POST':
@@ -15,6 +21,8 @@ def login():
             email = request.form.get('Email')
             password = pbkdf2_sha256.hash(request.form.get('Password'))
             conf_password = pbkdf2_sha256.hash (request.form.get('Conf_password'))
+
+            bd.insertar_admin(user)
 
         
         elif formulario == 'log-in':
@@ -38,6 +46,7 @@ def dashboard_admin():
 @app.route('/dashboard_empleado')
 def dashboard_empleado():
     return render_template('dashboard_empleado.html')
+    
 if __name__== '__main__':
     app.run()
     BaseDatos.inicializar_colecciones()
