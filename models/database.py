@@ -1,88 +1,54 @@
-import sqlite3 as base_datos
-from database.settings import DB_FILE
-from flask import flash
+from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
 
 class BaseDatos:
     def __init__(self):
         try:
-            self.connection = base_datos.connect(DB_FILE)
-            self.cursor = self.connection.cursor()
+            # Cargar las variables de entorno
+            load_dotenv()
+            mong_url = os.getenv("MONGO_URL")
 
-            # Script para crear las tabas si no existen
-            self.crear_tablas()
+            # Conexión a MongoDB
+            self.client = MongoClient(mong_url)
+            self.db = self.client["Python_Bank"]
 
-            # Habilitar las FK
-            self.ejecutar_consulta("PRAGMA foreign_keys = ON;")
+            self.inicializar_colecciones()
 
-        except:
-            print(f'\nError en la BBDD, inténtelo de nuevo más tarde')
+            print("✅ Conexión a MongoDB establecida correctamente.")
 
-    def crear_tablas(self):
-        tablas = """
-            CREATE TABLE IF NOT EXISTS usuarios(
-                dni TEXT PRIMARY KEY,
-                nombre TEXT NOT NULL,
-                apellidos TEXT NOT NULL,
-                telefono TEXT UNIQUE NOT NULL,
-                email TEXT UNIQUE,
-                nombre_usuario TEXT UNIQUE NOT NULL,
-                passw TEXT NOT NULL,
-                rol TEXT DEFAULT '' CHECK (rol IN('admin','empleado','cliente',''))
-                );
+        except Exception as e:
+            print(f"\n❌ Falló la conexión a MongoDB: {e}")
 
-            CREATE TABLE IF NOT EXISTS cuentas_bancarias(
-                id_cuenta INTEGER PRIMARY KEY AUTOINCREMENT,
-                dni_titular TEXT NOT NULL,
-                telefono TEXT UNIQUE NOT NULL,
-                saldo REAL DEFAULT 0.0,
-                fecha_creacion DATE DEFAULT CURRENT_DATE,
+    def inicializar_colecciones(self):
+        colecciones = ['cuenta_bancaria', 'transacción', 'usuarios']
+        col_existentes = self.db.list_collection_names()
 
-                FOREIGN KEY(dni_titular) REFERENCES usuarios(dni) 
-                    ON UPDATE CASCADE
-                    ON DELETE CASCADE
-                );
+        for coleccion in colecciones:
+            if coleccion not in col_existentes:
+                self.db.create_collection(coleccion)
+                print(f"📁 Colección '{coleccion}' creada.")
 
-            CREATE TABLE IF NOT EXISTS transacciones(
-                id_transaccion INTEGER PRIMARY KEY AUTOINCREMENT,
-                cuenta_origen INTEGER NOT NULL,
-                cuenta_destino INTEGER NOT NULL,
-                concepto TEXT NOT NULL,
-                fecha DATE DEFAULT CURRENT_DATE,
-                monto REAL NOT NULL,
-
-                FOREIGN KEY(cuenta_origen) REFERENCES cuentas_bancarias(id_cuenta)
-                    ON UPDATE CASCADE
-                    ON DELETE CASCADE,
-
-                FOREIGN KEY(cuenta_destino) REFERENCES cuentas_bancarias(id_cuenta)
-                    ON UPDATE CASCADE
-                    ON DELETE CASCADE
-                );
-
-            -- Insertar los datos del administrador del sistema --
-
-            INSERT INTO usuarios(dni,nombre,apellidos,telefono,email,nombre_usuario,passw,rol)
-                VALUES('99999999Z','Admin','De la App','600123123','admin@pythonbank.com','adminuser','admin123','admin');
-
-            """ 
+    def insertar_admin(self):
         
-        self.cursor.executescript(tablas)
-        self.connection.commit()
+        #Sólo se ejecutará si la tabla usuarios está vacía
 
-    def ejecutar_consulta(self, query, params=None):
-        try:
-            if params:
-                self.cursor.execute(query, params)
-                self.connection.commit()
-            else:
-                self.cursor.execute(query)
-                self.connection.commit()
+        if self.db['usuarios'].count_documents({}) == 0:
+            usuario_inicial = {
+                "dni": "99999999Z",
+                "nombre": "Admin",
+                "apellidos": "De la App",
+                "telefono": "600123213",
+                "email": "admin@pythonbank.com",
+                "nombre_usuario": "adminuser",
+                "passw": "admin123",
+                "rol": "admin"
+            }
+            self.db['usuarios'].insert_one(usuario_inicial)
+            print("👤 Usuario administrador insertado en la colección 'usuarios'.")
+        else:
+            print("⚠️ La colección 'usuarios' ya contiene registros.")
 
-        except:
-            print(f'\n¡¡¡Hay un error en la consulta, revísalo!!!')
-
-    def resultado_consulta(self):
-        return self.cursor.fetchall()
-    
-    def cerrar_conexion(self):
-        self.connection.close()        
+    # Nos devuelve la coleccion (tabla) cuyo nombre le especifiquemos
+    def obtener_colecciones(self,nombre):
+        return self.db[nombre]
