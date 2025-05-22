@@ -25,13 +25,7 @@ def login():
             password = pbkdf2_sha256.hash(request.form.get('Password'))
             conf_password = pbkdf2_sha256.hash (request.form.get('Conf_password'))
 
-<<<<<<< Updated upstream
-            bd.insertar_admin(user)
-
-        
-=======
             
->>>>>>> Stashed changes
         elif formulario == 'log-in':
             username = request.form.get('Username')
             password = request.form.get('Password')
