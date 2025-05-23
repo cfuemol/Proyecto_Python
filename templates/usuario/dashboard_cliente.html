@@ -49,9 +49,10 @@
                     <td>{{ transaccion['fecha'] }}</td>
                     
                       {% if {{ transaccion['monto'] }} >= 0 %}
-                          <td class='monto_poditibo'>
+                          <td class="monto_poditibo">
                               {{transaccion['monto']}}
                           </td>
+                      {% endif %}
                 </tr>
             {% endfor %}
         </table>
