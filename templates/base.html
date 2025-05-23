@@ -6,15 +6,14 @@
   <title>{% block title %}Inicio{% endblock %}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_base.css') }}">
-  {% block extra_head %}{% endblock %}
 </head>
 <body>
   <div class="sidebar" id="sidebar">
     <ul>
-      <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i><span class="text">Inicio</span></a></li>
-      <li><a href="{{ url_for('perfil') }}"><i class="fas fa-user"></i><span class="text">Perfil</span></a></li>
-      <li><a href="{{ url_for('graficas') }}"><i class="fas fa-chart-line"></i><span class="text">Gráficas</span></a></li>
-      <li><a href="{{ url_for('salir') }}"><i class="fas fa-sign-out-alt"></i><span class="text">Salir</span></a></li>
+      <li><a href=""><i class="fas fa-home"></i><span class="text">Inicio</span></a></li>
+      <li><a href=""><i class="fas fa-user"></i><span class="text">Perfil</span></a></li>
+      <li><a href=""><i class="fas fa-chart-line"></i><span class="text">Gráficas</span></a></li>
+      <li><a href=""><i class="fas fa-sign-out-alt"></i><span class="text">Salir</span></a></li>
     </ul>
   </div>
 
