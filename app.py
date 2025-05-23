@@ -137,7 +137,7 @@ def dashboard_empleado():
 @app.route('/logout')
 def logout():
     session.clear()
-    redirect(url_for('login'))
+    return redirect(url_for('login'))
     
 if __name__== '__main__':
     
