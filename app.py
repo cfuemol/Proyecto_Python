@@ -4,6 +4,8 @@ from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 
+app.secret_key = 'clave secreta'
+
 bd = BaseDatos()
 
 usuarios_col = bd.obtener_colecciones('usuarios')
@@ -65,8 +67,12 @@ def login():
             username = request.form.get['Username']
             password = request.form.get['Password']
 
+            session['user'] = username
+            usuarios_col[username] = password
+            print(usuarios_col)
+            return redirect (url_for('./usuario/dashboard_cliente.html'))
 
-    return render_template('login.html')
+    return render_template('register.html')
 
 # END POINTS CLIENTES #
 
@@ -87,7 +93,8 @@ def dashboard_empleado():
     return render_template('empleado/dashboard_empleado.html', empleado=empleado)
     
 if __name__== '__main__':
-    app.run()
+    
     BaseDatos.inicializar_colecciones()
     BaseDatos.insertar_admin()
+    app.run()
 

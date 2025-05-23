@@ -21,7 +21,7 @@ class BaseDatos:
             print(f"\n❌ Falló la conexión a MongoDB: {e}")
 
     def inicializar_colecciones(self):
-        colecciones = ['cuenta_bancaria', 'transacción', 'usuarios']
+        colecciones = ['cuenta_bancaria', 'transaccion', 'usuarios']
         col_existentes = self.db.list_collection_names()
 
         for coleccion in colecciones:
