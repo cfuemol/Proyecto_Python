@@ -78,9 +78,9 @@ def login():
 
                 session['user'] = username
             
-            return redirect (url_for('dashboard_cliente'))
-            #else:
-              #  return print('Nombre de usuario o contraseña incorrecta.')
+                return redirect (url_for('dashboard_cliente'))
+            else:
+                return print('Nombre de usuario o contraseña incorrecta.')
             
             
 
