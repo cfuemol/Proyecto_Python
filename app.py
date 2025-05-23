@@ -16,12 +16,13 @@ transacciones_col = bd.obtener_colecciones('transacciones')
 def login():
     
     if request.method == 'POST':
-        formulario = request.form.get['formulario']
+        formulario = request.form.get('action')
+        print(formulario)
         
         ### REGISTRO DE USUARIO ###        
 
         if formulario =='registro':
-            passwd = request.form.get('passwd')
+            passwd = request.form.get('password')
 
             # Hash de la contraseña #
             passwd_hash = pbkdf2_sha256.hash(passwd)
@@ -37,6 +38,8 @@ def login():
                 'password' : passwd_hash,
                 'rol' : 'cliente'
             }
+
+            print(dict_usuario)
 
             # Usuarios en formato lista
             usuarios = bd.lista_usuarios(usuarios_col)

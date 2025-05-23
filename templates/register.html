@@ -13,8 +13,8 @@
     <div class="sign-up-container">
         <span class="form-title">Sign Up</span>
         <label for="switch" class="switch-label">Already have an account?</label>
-        <form class="sign-up-form" name="formulario">
-        <label for="nombre">Username</label>
+        <form class="sign-up-form" method="post">
+        <label for="nombre">Nombre</label>
         <input
             class="input"
             placeholder="Francisco"
@@ -54,6 +54,14 @@
             name="email"
             type="email"
         />
+        <label for="username">Username</label>
+        <input
+            class="input"
+            placeholder="pepito"
+            id="username"
+            name="username"
+            type="text"
+        />
         <label for="password">Password</label>
         <input
             class="input"
@@ -62,13 +70,13 @@
             name="password"
             type="password"
         />
-        <button type="submit" value="registro">Sign Up</button>
+        <button type="submit" name="action" value="registro">Sign Up</button>
         </form>
     </div>
     <div class="log-in-container">
         <span class="form-title">Login</span>
         <label for="switch" class="switch-label">Don't have an account?</label>
-        <form class="log-in-form" name="formulario">
+        <form class="log-in-form" name="formulario" method="post">
         <label for="username">Username</label>
         <input
             class="input"
@@ -86,7 +94,7 @@
             type="password"
         />
         
-        <button type="submit" value="log-in">Login</button>
+        <button type="submit" name="action" value="log-in">Login</button>
         </form>
     </div>
     </div>

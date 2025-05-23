@@ -40,8 +40,8 @@ class BaseDatos:
                 "apellidos": "De la App",
                 "telefono": "600123213",
                 "email": "admin@pythonbank.com",
-                "nombre_usuario": "adminuser",
-                "passw": "admin123",
+                "username": "adminuser",
+                "password": "admin123",
                 "rol": "admin"
             }
             self.db['usuarios'].insert_one(usuario_inicial)
@@ -55,21 +55,22 @@ class BaseDatos:
     def lista_usuarios(self,usuarios):
         return list(usuarios.find())
     
-    def comprueba_registro(self, lista_usuarios, registro):
+    def comprueba_registro(self, lista_usuarios, nuevo_usuario):
 
         ### Devuelve un valor en función del error ###
 
         for usuario in lista_usuarios:
-            if usuario['dni'] == registro['dni']:
+            print(usuario)
+            if usuario['dni'] == nuevo_usuario['dni']:
                 return 1
 
-            elif usuario['telefono'] == registro['telefono']:
+            elif usuario['telefono'] == nuevo_usuario['telefono']:
                 return 2
 
-            elif usuario['email'] == registro['email']:
+            elif usuario['email'] == nuevo_usuario['email']:
                 return 3
 
-            elif usuario['username'] == registro['username']:
+            elif usuario['username'] == nuevo_usuario['username']:
                 return 4
             
         return 0
