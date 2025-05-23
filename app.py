@@ -70,17 +70,31 @@ def login():
             usuarios = bd.lista_usuarios(usuarios_col)
             username = request.form.get('username2')
             password = request.form.get('password2')
+            
             for usuario in usuarios:
                 if usuario['username'] == username:
-                    
+
+                    login_user = usuario                    
                     hashed_password = usuario['password']
+                    break
+            
             if hashed_password and pbkdf2_sha256.verify(password, hashed_password):
 
                 session['user'] = username
+
+                if login_user['rol'] == 'cliente':
             
-                return redirect (url_for('dashboard_cliente'))
+                    return redirect (url_for('dashboard_cliente'))
+                elif login_user['rol'] == 'empleado':
+            
+                    return redirect (url_for('dashboard_empleado'))
+                
+                elif login_user['rol'] == 'admin':
+            
+                    return redirect (url_for('dashboard_admin'))
+            
             else:
-                return print('Nombre de usuario o contraseña incorrecta.')
+                flash('Nombre de usuario o contraseña incorrecta.')
             
             
 
@@ -104,6 +118,13 @@ def dashboard_admin():
 @app.route('/dashboard_empleado')
 def dashboard_empleado():
     return render_template('empleado/dashboard_empleado.html')
+
+# END POINT LOGOUT #
+
+@app.route('/logout')
+def logout():
+    session.pop('user',None)
+    redirect(url_for('login'))
     
 if __name__== '__main__':
     
