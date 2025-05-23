@@ -72,19 +72,19 @@ def login():
 
 @app.route('/dashboard_cliente')
 def dashboard_cliente():
-    return render_template('dashboard_cliente.html', cliente=cliente)
+    return render_template('usuario/dashboard_cliente.html', cliente=cliente)
 
 # END POINTS ADMINISTRADOR #
 
 @app.route('/dashboard_admin')
 def dashboard_admin():
-    return render_template('dashboard_admin.html')
+    return render_template('admin/dashboard_admin.html', admin=admin)
 
 # END POINTS EMPLEADOS #
 
 @app.route('/dashboard_empleado')
 def dashboard_empleado():
-    return render_template('dashboard_empleado.html')
+    return render_template('empleado/dashboard_empleado.html', empleado=empleado)
     
 if __name__== '__main__':
     app.run()
