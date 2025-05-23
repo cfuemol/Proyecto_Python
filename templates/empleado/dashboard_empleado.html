@@ -1,11 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../../static/css/styles_base.css">
 </head>
 <body>
-    
+  <div class="sidebar" id="sidebar">
+    <ul>
+      <li><a href="Index.html"><i class="fas fa-home"></i><span class="text">Inicio</span></a></li>
+      <li><a href="perfil.html"><i class="fas fa-user"></i><span class="text">Perfil</span></a></li>
+      <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i><span class="text">Tickets</span></a></li>
+      <li><a href="graficas.html"><i class="fas fa-chart-line"></i><span class="text">Gráficas</span></a></li>
+      <li><a href="configuracion.html"><i class="fas fa-cog"></i><span class="text">Configuración</span></a></li>
+      <li><a href="salir.html"><i class="fas fa-sign-out-alt"></i><span class="text">Salir</span></a></li>
+    </ul>
+  
+
+  {% block contenido%}
+    </div>
+        <div class="div_cuerpo">
+            <div class="tarjeta_usuario">
+            <div class="img_tarjeta">
+        
+        </div>
+
+        <div>
+            <h1>NºCuenta: 09348509347543032</h1>
+            <h1>Saldo:123567123000034720</h1>
+            <h2>usuario:</h2>
+        </div>
+    </div>
+
+    {% endblock %}
+
 </body>
 </html>

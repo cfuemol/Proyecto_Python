@@ -94,7 +94,7 @@ def dashboard_empleado():
     
 if __name__== '__main__':
     
-    BaseDatos.inicializar_colecciones()
-    BaseDatos.insertar_admin()
+    BaseDatos.inicializar_colecciones(BaseDatos())
+    BaseDatos.insertar_admin(BaseDatos())
     app.run()
 
