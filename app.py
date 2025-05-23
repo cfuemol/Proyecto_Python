@@ -70,6 +70,9 @@ def login():
             usuarios = bd.lista_usuarios(usuarios_col)
             username = request.form.get('username2')
             password = request.form.get('password2')
+
+            login_user = None   # Inicializar
+            hashed_password = None
             
             for usuario in usuarios:
                 if usuario['username'] == username:
@@ -77,26 +80,30 @@ def login():
                     login_user = usuario                    
                     hashed_password = usuario['password']
                     break
-            
-            if hashed_password and pbkdf2_sha256.verify(password, hashed_password):
 
-                session['user'] = username
-
-                if login_user['rol'] == 'cliente':
+            # Validar si existe el usuario y la contraseña
             
+            if login_user and hashed_password and pbkdf2_sha256.verify(password, hashed_password):
+
+                # Guardar datos en session
+
+                session['username'] = login_user['username']
+                session['rol'] = login_user['rol']
+                session['dni'] = login_user.get('dni')
+
+                # Redirección según el rol 
+
+                if login_user['rol'] == 'cliente':            
                     return redirect (url_for('dashboard_cliente'))
-                elif login_user['rol'] == 'empleado':
-            
+                
+                elif login_user['rol'] == 'empleado':            
                     return redirect (url_for('dashboard_empleado'))
                 
-                elif login_user['rol'] == 'admin':
-            
+                elif login_user['rol'] == 'admin':            
                     return redirect (url_for('dashboard_admin'))
             
             else:
                 flash('Nombre de usuario o contraseña incorrecta.')
-            
-            
 
     return render_template('register.html')
 
@@ -104,8 +111,14 @@ def login():
 
 @app.route('/dashboard_cliente')
 def dashboard_cliente():
-    user=  session.get('user')
-    return render_template('usuario/dashboard_cliente.html')
+
+    if 'username' in session and session.get('rol') == 'cliente':
+        dni = session.get('dni')
+        return render_template('usuario/dashboard_cliente.html',dni=dni)
+    
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('login'))
 
 # END POINTS ADMINISTRADOR #
 
@@ -123,7 +136,7 @@ def dashboard_empleado():
 
 @app.route('/logout')
 def logout():
-    session.pop('user',None)
+    session.clear()
     redirect(url_for('login'))
     
 if __name__== '__main__':
