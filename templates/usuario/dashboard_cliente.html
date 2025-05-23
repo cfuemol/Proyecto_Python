@@ -48,9 +48,9 @@
                     <td>{{ transaccion['concepto'] }}</td>
                     <td>{{ transaccion['fecha'] }}</td>
                     
-                      {% if {{ transaccion['monto'] }} >= 0 %}
-                          <td class="monto_poditibo">
-                              {{transaccion['monto']}}
+                      {% if {{ transaccion['monto'] }} == 0 %}
+                          <td class="monto_positivo">
+                              {{ transaccion['monto'] }}
                           </td>
                       {% endif %}
                 </tr>
