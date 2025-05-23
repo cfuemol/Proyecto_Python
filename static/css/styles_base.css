@@ -84,8 +84,25 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between; 
+  width: 100%;
 }
 
+.div_transacciones{
+  border: rgb(48, 16, 226) 5px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+}
+
+.div_opciones{
+  border: rgb(243, 16, 103) 5px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+}
 /*----------------------------------------Tarjetas Usuarios--------------------------------------*/
 
 .tarjeta_usuario{
@@ -97,8 +114,9 @@ body {
   align-items: center;
   justify-content: center;
   height: 250px;
-  width: 100%;
+  width: 70%;
   justify-content: space-between;
+  margin-bottom: 5%;
 }
 
 .img_tarjeta{

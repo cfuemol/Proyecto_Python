@@ -30,13 +30,38 @@
       </div>
     </div>
 
-    <div>
-      <div>
-
+    <div class="div_lateral">
+      <div class="div_transacciones">
+        <h2>Transacciones</h2>
+        <table style="border: 2px solid black">
+            <tr>
+                <th>Cuenta Origen</th>
+                <th>Cuenta Destino</th>
+                <th>Concepto</th>
+                <th>Fecha</th>
+                <th>Monto</th>
+            </tr>
+            {% for transaccion in lista_transacciones %}
+                <tr>
+                    <td>{{ transaccion['id_cuenta_origen'] }}</td>
+                    <td>{{ transaccion['id_cuenta_destino'] }}€</td>
+                    <td>{{ transaccion['concepto'] }}</td>
+                    <td>{{ transaccion['fecha'] }}</td>
+                    
+                      {% if {{ transaccion['monto'] }} >= 0 %}
+                          <td class='monto_poditibo'>
+                              {{transaccion['monto']}}
+                          </td>
+                </tr>
+            {% endfor %}
+        </table>
       </div>
-
-      <div>
-
+          
+      <div  class="div_opciones">
+        <br>
+        <br>
+        <br>
+        <br>
       </div>
     </div>
   </div>
