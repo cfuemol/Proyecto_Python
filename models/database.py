@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from passlib.hash import pbkdf2_sha256
 import os
 from dotenv import load_dotenv
 
@@ -34,6 +35,10 @@ class BaseDatos:
         #Sólo se ejecutará si la tabla usuarios está vacía
 
         if self.db['usuarios'].count_documents({}) == 0:
+            
+            passwd = "admin123"
+            pass_hashed = pbkdf2_sha256.hash(passwd)
+
             usuario_inicial = {
                 "dni": "99999999Z",
                 "nombre": "Admin",
@@ -41,7 +46,7 @@ class BaseDatos:
                 "telefono": "600123213",
                 "email": "admin@pythonbank.com",
                 "username": "adminuser",
-                "password": "admin123",
+                "password": pass_hashed,
                 "rol": "admin"
             }
             self.db['usuarios'].insert_one(usuario_inicial)
