@@ -7,6 +7,16 @@
     <title>Register</title>
 </head>
 <body>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li style="color: red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     
     <div class="form-container">
     <input checked="" type="checkbox" id="switch" />
