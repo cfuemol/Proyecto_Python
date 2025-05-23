@@ -64,13 +64,14 @@ def login():
                 
             
         elif formulario == 'log-in':
-            username = request.form.get['Username']
-            password = request.form.get['Password']
-            if username in usuarios_col and pbkdf2_sha256.verify(password, usuarios_col[username]):
+            usuarios = bd.lista_usuarios(usuarios_col)
+            username = request.form.get['username']
+            password = request.form.get['password']
+            if username in usuarios and pbkdf2_sha256.verify(password, usuarios[username]):
                 session['user'] = username
                 return redirect (url_for('dashboard_cliente'))
             else:
-                return 'Nombre de usuario o contraseña incorrectos'
+                return print('Nombre de usuario o contraseña incorrecta.')
             
             
 
