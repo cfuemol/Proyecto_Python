@@ -13,6 +13,9 @@ usuarios_col = bd.obtener_colecciones('usuarios')
 cuentas_col = bd.obtener_colecciones('cuenta_bancaria')
 transacciones_col = bd.obtener_colecciones('transacciones')
 
+
+
+
 @app.route('/', methods=['GET','POST'])
 def login():
     
@@ -238,6 +241,24 @@ def mostrar_cuentas(cliente):
     else:
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
+    
+@app.route('/crear_cuenta')
+
+def crear_cuenta():
+    cuentas = bd.lista_cuentas(cuentas_col)
+    fecha = date.today()
+    fecha_norm = fecha.strftime('%d/%m/%Y')
+    cliente= request.args.get('cliente')
+    cuenta_nueva={
+        'id_cuenta':cuentas[-1]['id_cuenta']+1,
+        'dni_titular': cliente[2],
+        'telefono' : cliente[4],
+        'fecha_titular':fecha_norm,
+        'saldo':0.00
+    }
+    bd.insertar_cuenta(cuenta_nueva)
+
+
 
 # END POINT LOGOUT #
 
