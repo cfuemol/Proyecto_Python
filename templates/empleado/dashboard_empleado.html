@@ -34,7 +34,7 @@
     {% block main %}
     <div>
       <div>
-          <table>
+          <table class="table_info">
             <thead>
               <tr>
                 <th>DNI</th>
@@ -56,14 +56,14 @@
                   <td>{{ cliente['email'] }}</td>
                   <td>{{ cliente['username'] }}</td>
                   <td>
-                    
+                    <button><a href="{{url_for('mostrar_cuentas',cliente=cliente['dni'])}}">Cuentas</a>  </button>
                   </td>
                 </tr>
               {% endfor %}
             </tbody>
           </table>
       </div>
-        <button><a href="{{url_for('mostrar_cuentas',cliente=cliente['dni'])}}">Cuentas</a>  </button>
+        
       <div>
     {% endblock %}
       </div>

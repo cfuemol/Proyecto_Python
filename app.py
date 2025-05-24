@@ -184,13 +184,19 @@ def mostrar_cuentas(cliente):
     
     if 'username' in session and session.get('rol') == 'empleado':
         usuarios = bd.lista_usuarios(usuarios_col)
+        cuentas = bd.lista_cuentas(cuentas_col)
+        cuentas_cliente=[]
         cliente_found = None
+        contador = 0
         for elemento in usuarios:
             if elemento['dni'] == cliente:
                 cliente_found = elemento
                 break
         if cliente_found:
-            return render_template('empleado/cuentas_cliente.html',cliente=cliente)
+            for cuenta in cuentas:
+                if cliente_found['dni'] ==cuenta['dni_titular']:
+                    cuentas_cliente.append(cuenta)
+            return render_template('empleado/cuentas_cliente.html',cliente_found=cliente_found, cuentas=cuentas_cliente, contador=contador)
         else:
             return render_template('404.html')
     
