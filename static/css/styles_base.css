@@ -69,29 +69,74 @@ body {
 /*----------------------------------------Cuerpo de la pagina--------------------------------------*/
 
 .div_cuerpo {
-    margin-left: 60px;
-    padding: 20px;
-    background-color: #f4f4f4;
-    height: 100vh;
-    overflow-y: auto;
-    transition: margin-left 0.3s ease;
+  margin-left: 60px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  height: 100vh;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
 }
 
 /* Expandir margen cuando el sidebar hace hover */
 
-.sidebar:hover ~ .div_cuerpo{
+.sidebar:hover~.div_cuerpo {
   margin-left: 200px;
 }
 
 .div_title .bienvenida {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .tarjeta_usuario {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #1e1e2f;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #292947;
+}
+
+
+/*----------------------------------------Tablas--------------------------------------*/
+
+.table_info {
+  width: 70%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table_info th, .table_info td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table_info th {
+  background-color: #1e1e2f;
+  color: white;
+  text-align: center;
+}
+
+.table_info tr:hover {
+  background-color: #f1f1f1;
 }

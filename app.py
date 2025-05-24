@@ -13,9 +13,6 @@ usuarios_col = bd.obtener_colecciones('usuarios')
 cuentas_col = bd.obtener_colecciones('cuenta_bancaria')
 transacciones_col = bd.obtener_colecciones('transacciones')
 
-
-
-
 @app.route('/', methods=['GET','POST'])
 def login():
     
@@ -66,9 +63,7 @@ def login():
                 case 0:
                     bd.insertar_user(dict_usuario)
                     flash('Usuario registrado correctamente')
-                    return redirect(url_for('login'))
-
-                
+                    return redirect(url_for('login'))                
             
         elif formulario == 'log-in':
             usuarios = bd.lista_usuarios(usuarios_col)
@@ -114,9 +109,7 @@ def login():
 # END POINTS CLIENTES #
 
 @app.route('/dashboard_cliente')
-def dashboard_cliente():
-   
-    
+def dashboard_cliente():    
    
     if 'username' in session and session.get('rol') == 'cliente':
         dni = session.get('dni')
@@ -144,13 +137,16 @@ def dashboard_admin():
     
 @app.route('/admin_users')
 def admin_user():
-    pass
     
-    if 'username' in session and session.get('rol') == 'admin':
-        
-        lista_usuarios = bd.lista_usuarios()
+    if 'username' in session and session.get('rol') == 'admin':        
+        usuarios = bd.lista_usuarios(usuarios_col)
+        lista_usuarios = []
 
-        return render_template('admin/admin_users.html', lista_usuarios=lista_usuarios)
+        for usuario in usuarios:
+            if usuario['rol'] != 'admin':
+                lista_usuarios.append(usuario)
+
+        return render_template('admin/admin_users.html',lista_usuarios=lista_usuarios)
 
     else:
         flash('Acceso no autorizado')
@@ -160,8 +156,7 @@ def admin_user():
 # END POINTS EMPLEADOS #
 
 @app.route('/dashboard_empleado')
-def dashboard_empleado():
-    
+def dashboard_empleado():    
 
     if 'username' in session and session.get('rol') == 'empleado':
         dni = session.get('dni')

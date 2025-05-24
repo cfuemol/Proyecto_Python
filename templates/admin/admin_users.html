@@ -1,4 +1,12 @@
-{% extends 'admin/dashboard.admin.html' %}
+{% extends 'admin/dashboard_admin.html' %}
+
+{% block title_pag %}
+            <div class="div_title">
+                <div class="bienvenida">
+                    Listado de usuarios registrados en el sistema
+                </div>
+            </div>
+        {% endblock %}
 
 {% block contenido %}
 
@@ -14,31 +22,19 @@
         </tr>
 
     {% for usuario in lista_usuarios %}
-
-        {% if usuario.rol != 'admin' %}
+        <tr>
+            <td>{{ usuario.dni }}</td>            
+            <td>{{ usuario.nombre }}</td>
+            <td>{{ usuario.apellidos }}</td>
+            <td>{{ usuario.telefono }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.username }}</td>
             <td>
-                {{ usuario.dni }}
-            </td>            
-            <td>
-                {{ usuario.nombre }}
+                <div class="boton_vermas">
+                    <a href="" class="btn">Opciones</a>
+                </div>
             </td>
-            <td>
-                {{ usuario.apellidos }}
-            </td>
-            <td>
-                {{ usuario.telefono }}
-            </td>
-            <td>
-                {{ usuario.email }}
-            </td>
-            <td>
-                {{ usuario.username }}
-            </td>
-            <td>
-                <a href="" class="boton-enlace">Opciones</a>
-            </td>
-        {% endif %}
-
+        </tr>
 
     {% endfor %}
 
