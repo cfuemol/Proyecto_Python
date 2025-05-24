@@ -124,7 +124,7 @@ def dashboard_cliente():
     
     else:
         flash('Acceso no autorizado')
-        return redirect(url_for('login'))
+        return redirect(url_for('logout'))
 
     
 # END POINTS ADMINISTRADOR #
@@ -140,10 +140,20 @@ def dashboard_admin():
 
     else:
         flash('Acceso no autorizado')
-        return redirect(url_for('login')) 
+        return redirect(url_for('logout')) 
     
 @app.route('/admin_users')
 def admin_user():
+    
+    if 'username' in session and session.get('rol') == 'admin':
+        
+        lista_usuarios = bd.lista_usuarios()
+
+        return render_template('admin/admin_users.html', usuarios=lista_usuarios)
+
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout')) 
 
 
 # END POINTS EMPLEADOS #
@@ -162,7 +172,7 @@ def dashboard_empleado():
     
     else:
         flash('Acceso no autorizado')
-        return redirect(url_for('login'))
+        return redirect(url_for('logout'))
 
 # END POINT LOGOUT #
 

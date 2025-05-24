@@ -68,61 +68,30 @@ body {
 
 /*----------------------------------------Cuerpo de la pagina--------------------------------------*/
 
-
-.div_cuerpo{
-  border: rgb(226, 16, 16) 5px solid;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  padding: 30px;
-  margin-left: 60px;
+.div_cuerpo {
+    margin-left: 60px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    height: 100vh;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease;
 }
 
-.div_lateral{
-  border: rgb(34, 226, 16) 5px solid;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between; 
-  width: 100%;
+/* Expandir margen cuando el sidebar hace hover */
+
+.sidebar:hover ~ .div_cuerpo{
+  margin-left: 200px;
 }
 
-.div_transacciones{
-  border: rgb(48, 16, 226) 5px solid;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 70%;
+.div_title .bienvenida {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.div_opciones{
-  border: rgb(243, 16, 103) 5px solid;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 25%;
-}
-/*----------------------------------------Tarjetas Usuarios--------------------------------------*/
-
-.tarjeta_usuario{
-  border: rgb(68, 68, 68) 5px solid;
-  border-radius: 20px;
-  padding: 15px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 250px;
-  width: 70%;
-  justify-content: space-between;
-  margin-bottom: 5%;
-}
-
-.img_tarjeta{
-  border: rgb(68, 68, 68) 5px solid;
-  border-radius: 100%;
-  height: 20vh;
-  width: 20vh;
-  
+.tarjeta_usuario {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
