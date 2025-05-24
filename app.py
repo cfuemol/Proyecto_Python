@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from models.database import BaseDatos
+from datetime import date
 from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
@@ -131,7 +132,19 @@ def dashboard_cliente():
 @app.route('/dashboard_admin')
 def dashboard_admin():
 
-    return render_template('admin/dashboard_admin.html')
+    if 'username' in session and session.get('rol') == 'admin':
+        fecha = date.today()
+        fecha_norm = fecha.strftime('%d/%m/%Y')
+
+        return render_template('admin/dashboard_admin.html',fecha=fecha_norm)
+
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('login')) 
+    
+@app.route('/admin_users')
+def admin_user():
+
 
 # END POINTS EMPLEADOS #
 

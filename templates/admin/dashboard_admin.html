@@ -1,11 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Panel de control - Administrador</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../static/css/styles_base.css">
 </head>
+
 <body>
-    
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="{{url_for('dashboard_admin')}}"><i class="fas fa-home"></i><span class="text">Inicio</span></a></li>
+            <li><a href=""><i class="fas fa-cog"></i><span class="text">Modificar Usuario</span></a></li>
+            <li><a href="{{url_for('logout')}}"><i class="fas fa-sign-out-alt"></i><span class="text">Salir</span></a></li>
+        </ul>
+    </div>
+
+    <div class="div_cuerpo">
+        <div class="tarjeta_usuario" style="background-color: burlywood;">
+            <div class="img_tarjeta" style="background-color: red;">
+                
+            </div>
+            <div>
+                <h1>Bienvenido, Administrador</h1>
+                <h1>Fecha: {{ fecha }}</h1>
+            </div>
+        </div>
+
+        <div class="div_lateral">
+            <p>Panel de control para administradores del sistema</p>
+            
+        </div>
+    </div>
+
 </body>
+
 </html>
