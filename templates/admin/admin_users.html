@@ -31,7 +31,7 @@
             <td>{{ usuario.username }}</td>
             <td>
                 <div class="boton_vermas">
-                    <a href="" class="btn">Opciones</a>
+                    <a href="{{ url_for('admin_mostrar_user',user=usuario.dni) }}" class="btn">Opciones</a>
                 </div>
             </td>
         </tr>

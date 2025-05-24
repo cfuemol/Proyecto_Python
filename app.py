@@ -151,6 +151,27 @@ def admin_user():
     else:
         flash('Acceso no autorizado')
         return redirect(url_for('logout')) 
+    
+@app.route('/admin_users/<user>')
+def admin_mostrar_user(user):
+    
+    if 'username' in session and session.get('rol') == 'admin':
+        usuarios = bd.lista_usuarios(usuarios_col)
+        user_found = None
+        
+        for usuario in usuarios:
+            if usuario['dni'] == user:
+                user_found = user
+                break
+
+        if user_found:            
+            return render_template('admin/admin_users.html',usuario=user_found)
+        else:
+            return render_template('404.html')
+    
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout'))
 
 
 # END POINTS EMPLEADOS #
@@ -171,8 +192,6 @@ def dashboard_empleado():
     else:
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
-
-# END POINT LOGOUT #
 
 @app.route('/cuentas_cliente/<cliente>')
 def mostrar_cuentas(cliente):
@@ -199,6 +218,7 @@ def mostrar_cuentas(cliente):
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
 
+# END POINT LOGOUT #
 
 @app.route('/logout')
 def logout():
