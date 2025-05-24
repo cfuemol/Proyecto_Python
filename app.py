@@ -124,7 +124,7 @@ def dashboard_cliente():
     
     else:
         flash('Acceso no autorizado')
-        return redirect(url_for('login'))
+        return redirect(url_for('logout'))
 
     
 # END POINTS ADMINISTRADOR #
@@ -140,31 +140,53 @@ def dashboard_admin():
 
     else:
         flash('Acceso no autorizado')
-        return redirect(url_for('login')) 
+        return redirect(url_for('logout')) 
     
 @app.route('/admin_users')
 def admin_user():
-
+    pass
 
 # END POINTS EMPLEADOS #
 
 @app.route('/dashboard_empleado')
 def dashboard_empleado():
-    usuarios = bd.lista_usuarios(usuarios_col)
-    clientes = []
-    for cliente in usuarios:
-            if cliente['rol'] == 'cliente':
-                clientes.append(cliente)
+    
 
     if 'username' in session and session.get('rol') == 'empleado':
         dni = session.get('dni')
+        usuarios = bd.lista_usuarios(usuarios_col)
+        clientes = []
+        for cliente in usuarios:
+                if cliente['rol'] == 'cliente':
+                    clientes.append(cliente)
+
         return render_template('empleado/dashboard_empleado.html',dni=dni,clientes = clientes)
     
     else:
         flash('Acceso no autorizado')
-        return redirect(url_for('login'))
+        return redirect(url_for('logout'))
 
 # END POINT LOGOUT #
+
+@app.route('/cuentas_cliente/<cliente>')
+def mostrar_cuentas(cliente):
+    
+    if 'username' in session and session.get('rol') == 'empleado':
+        usuarios = bd.lista_usuarios(usuarios_col)
+        cliente_found = None
+        for elemento in usuarios:
+            if elemento['dni'] == cliente:
+                cliente_found = elemento
+                break
+        if cliente_found:
+            return render_template('empleado/cuentas_cliente.html',cliente=cliente)
+        else:
+            return render_template('404.html')
+    
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout'))
+
 
 @app.route('/logout')
 def logout():
