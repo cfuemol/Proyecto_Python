@@ -152,26 +152,47 @@ def admin_user():
         flash('Acceso no autorizado')
         return redirect(url_for('logout')) 
     
-@app.route('/admin_users/<user>')
-def admin_mostrar_user(user):
-    
-    if 'username' in session and session.get('rol') == 'admin':
-        usuarios = bd.lista_usuarios(usuarios_col)
-        user_found = None
-        
-        for usuario in usuarios:
-            if usuario['dni'] == user:
-                user_found = user
-                break
+@app.route('/admin_users/<user>/edit', methods=['GET','POST'])
+def admin_editar_usuario(user):
 
-        if user_found:            
-            return render_template('admin/admin_users.html',usuario=user_found)
-        else:
-            return render_template('404.html')
-    
+    if 'username' in session and session.get('rol') == 'admin':
+        
+        if request.method == 'POST':
+            edit_user = {
+                'nombre' : request.form.get('nombre').title(),
+                'apellidos' : request.form.get('apellidos').title(),
+                'rol' : request.form.get('rol')
+            }
+            
+            usuarios_col.update_one(
+                {'dni' : user['dni']},
+                {'$set' :
+                    {   'nombre': edit_user['nombre'],
+                        'apellidos' : edit_user['apellidos'],
+                        'rol' : edit_user['rol']}
+                }
+            )
+
+            flash('Usuario actualizado correctamente')
+            return redirect(url_for('admin_user', usuario=user))
+        
+        return render_template('admin/editar_usuario.html', usuario=user)
+
     else:
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
+    
+@app.route('/admin_users/<user>/delete', methods=['POST'])
+def eliminar_usuario(user):
+
+        if 'username' in session and session.get('rol') == 'admin':
+            usuarios_col.delete_one({'dni' : user})
+            flash('Usuario eliminado con éxito')
+            return redirect(url_for('admin_user'))
+    
+        else:
+            flash('Acceso no autorizado')
+            return redirect(url_for('logout'))
 
 
 # END POINTS EMPLEADOS #

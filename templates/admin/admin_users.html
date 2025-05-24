@@ -1,12 +1,12 @@
 {% extends 'admin/dashboard_admin.html' %}
 
 {% block title_pag %}
-            <div class="div_title">
-                <div class="bienvenida">
-                    Listado de usuarios registrados en el sistema
-                </div>
-            </div>
-        {% endblock %}
+    <div class="div_title">
+        <div class="bienvenida">
+            Listado de usuarios registrados en el sistema
+        </div>
+    </div>
+{% endblock %}
 
 {% block contenido %}
 
@@ -30,8 +30,13 @@
             <td>{{ usuario.email }}</td>
             <td>{{ usuario.username }}</td>
             <td>
-                <div class="boton_vermas">
-                    <a href="{{ url_for('admin_mostrar_user',user=usuario.dni) }}" class="btn">Opciones</a>
+                <div>
+                    <a href="{{ url_for('admin_editar_usuario', user=usuario.dni) }}" class="btn-editar">Editar</a>
+                </div>
+                <div>
+                    <form action="{{ url_for('eliminar_usuario', user=usuario.dni) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+                        <button type="submit" class="btn-submit">Borrar</button>
+                    </form>
                 </div>
             </td>
         </tr>

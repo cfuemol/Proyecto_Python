@@ -1,0 +1,21 @@
+{% extends 'admin/dashboard_admin.html' %}
+
+{% block title_pag %}
+    <div class="div_title">
+        <div class="bienvenida">
+            Editar datos de usuario
+        </div>
+    </div>
+{% endblock %}
+
+{% block contenido %}
+    <form method="POST">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" value="{{ usuario.nombre }}" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ usuario.email }}" required>
+
+        <button type="submit" class="btn">Guardar cambios</button>
+    </form>
+{% endblock %}
