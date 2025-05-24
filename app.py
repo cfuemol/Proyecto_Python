@@ -145,6 +145,17 @@ def dashboard_admin():
 @app.route('/admin_users')
 def admin_user():
     pass
+    
+    if 'username' in session and session.get('rol') == 'admin':
+        
+        lista_usuarios = bd.lista_usuarios()
+
+        return render_template('admin/admin_users.html', usuarios=lista_usuarios)
+
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout')) 
+
 
 # END POINTS EMPLEADOS #
 
