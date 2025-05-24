@@ -13,6 +13,8 @@ cuentas_col = bd.obtener_colecciones('cuenta_bancaria')
 transacciones_col = bd.obtener_colecciones('transacciones')
 
 
+
+
 @app.route('/', methods=['GET','POST'])
 def login():
     
@@ -141,7 +143,13 @@ def dashboard_empleado():
             if cliente['rol'] == 'cliente':
                 clientes.append(cliente)
 
-    return render_template('empleado/dashboard_empleado.html',clientes = clientes)
+    if 'username' in session and session.get('rol') == 'empleado':
+        dni = session.get('dni')
+        return render_template('empleado/dashboard_empleado.html',dni=dni,clientes = clientes)
+    
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('login'))
 
 # END POINT LOGOUT #
 
