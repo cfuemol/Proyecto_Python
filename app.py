@@ -12,6 +12,7 @@ usuarios_col = bd.obtener_colecciones('usuarios')
 cuentas_col = bd.obtener_colecciones('cuenta_bancaria')
 transacciones_col = bd.obtener_colecciones('transacciones')
 
+
 @app.route('/', methods=['GET','POST'])
 def login():
     
@@ -111,7 +112,9 @@ def login():
 
 @app.route('/dashboard_cliente')
 def dashboard_cliente():
-
+   
+    
+   
     if 'username' in session and session.get('rol') == 'cliente':
         dni = session.get('dni')
         return render_template('usuario/dashboard_cliente.html',dni=dni)
@@ -120,17 +123,25 @@ def dashboard_cliente():
         flash('Acceso no autorizado')
         return redirect(url_for('login'))
 
+    
 # END POINTS ADMINISTRADOR #
 
 @app.route('/dashboard_admin')
 def dashboard_admin():
+
     return render_template('admin/dashboard_admin.html')
 
 # END POINTS EMPLEADOS #
 
 @app.route('/dashboard_empleado')
 def dashboard_empleado():
-    return render_template('empleado/dashboard_empleado.html')
+    usuarios = bd.lista_usuarios(usuarios_col)
+    clientes = []
+    for cliente in usuarios:
+            if cliente['rol'] == 'cliente':
+                clientes.append(cliente)
+
+    return render_template('empleado/dashboard_empleado.html',clientes = clientes)
 
 # END POINT LOGOUT #
 
@@ -139,7 +150,6 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-    
 if __name__== '__main__':
     
     BaseDatos.inicializar_colecciones(BaseDatos())
