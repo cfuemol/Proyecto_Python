@@ -2,4 +2,46 @@
 
 {% block contenido %}
 
+    <table class="table_info">
+        <tr>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Teléfono</th>
+            <th>E-mail</th>
+            <th>Username</th>
+            <th>Acciones</th>
+        </tr>
+
+    {% for usuario in lista_usuarios %}
+
+        {% if usuario.rol != 'admin' %}
+            <td>
+                {{ usuario.dni }}
+            </td>            
+            <td>
+                {{ usuario.nombre }}
+            </td>
+            <td>
+                {{ usuario.apellidos }}
+            </td>
+            <td>
+                {{ usuario.telefono }}
+            </td>
+            <td>
+                {{ usuario.email }}
+            </td>
+            <td>
+                {{ usuario.username }}
+            </td>
+            <td>
+                <a href="" class="boton-enlace">Opciones</a>
+            </td>
+        {% endif %}
+
+
+    {% endfor %}
+
+    </table>
+
 {% endblock %}
