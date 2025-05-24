@@ -25,6 +25,11 @@
                     </tr>
                 {% endfor %}
             </tbody>
+            <tfoot>
+                <tr>
+                    <td><a href="{{url_for('crear_cuenta',cliente=cliente_found)}}">Crear Cuenta</a></td>
+                </tr>
+            </tfoot>
            
         </table>
        

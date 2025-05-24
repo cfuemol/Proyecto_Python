@@ -82,6 +82,9 @@ class BaseDatos:
 
     def lista_cuentas(self,cuentas):
         return list(cuentas.find())
+    
+    def insertar_cuenta(self,cuenta):
+        self.db['cuenta_bancaria'].insert_one(cuenta)
 
     def lista_transacciones(self,transacciones):
         return list(transacciones.find())
