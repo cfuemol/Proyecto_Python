@@ -149,7 +149,7 @@ def admin_user():
         
         lista_usuarios = bd.lista_usuarios()
 
-        return render_template('admin/admin_users.html', usuarios=lista_usuarios)
+        return render_template('admin/admin_users.html', lista_usuarios=lista_usuarios)
 
     else:
         flash('Acceso no autorizado')
