@@ -4,7 +4,7 @@
 {% block titulo %} Editar {% endblock %}
 
 {% block main %}
-<h1>Cuenta Nº {{ cuenta['id_cuenta'] }} </h1>
+<h1>Cuenta Nº {{ id_cuenta }} </h1>
 <div>
     
     <div>
@@ -16,12 +16,12 @@
             <tbody>
                 <tr>
                     <td> <label for="dni_nuevo">DNI:</label> </td>
-                    <input pattern="[0-9]{8}[a-zA-Z]{1}" id="dni_nuevo" name="dni_nuevo" required placeholder="DNI tipo 12345678Z">
+                    <td><input pattern="[0-9]{8}[a-zA-Z]{1}" id="dni_nuevo" name="dni_nuevo" required placeholder="DNI tipo 12345678Z"></td>
                     
                 </tr>
                 <tr>
                     <td><label for="telefono_nuevo">Teléfono:</label></td>
-                    <input type="tel" id="telefono_nuevo" name="telefono_nuevo" required placeholder="Teléfono	600123456">
+                    <td><input type="tel" id="telefono_nuevo" name="telefono_nuevo" required placeholder="Teléfono	600123456"></td>
                 </tr>
             </tbody>
             <tfoot>

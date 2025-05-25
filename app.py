@@ -398,30 +398,10 @@ def editar_cuenta(id_cuenta):
             flash('Usuario actualizado correctamente')
             return redirect(url_for('mostrar_cuentas', cliente=datos_cuenta['dni_titular']))
         
-        cuenta_cliente= []
-        cuentas_cliente=[]
         
-        cuentas = bd.lista_cuentas(cuentas_col) 
-        usuarios = bd.lista_usuarios(usuarios_col)
-        for cuenta in cuentas:
-            if cuenta['id_cuenta']==id_cuenta:
-                cuenta_cliente.append(cuenta)
-                break
-        
-        cliente_found = None
-        
-        for elemento in usuarios:
-            if elemento['dni'] == cuenta_cliente['dni_titular']:
-                cliente_found = elemento
-                break
-        if cliente_found:
-            for cuenta in cuentas:
-                if cliente_found['dni'] ==cuenta['dni_titular']:
-                    cuentas_cliente.append(cuenta)
             
-            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found)
-        else:
-            return render_template('404.html')
+        return render_template('empleado/editar_cuenta.html', id_cuenta=id_cuenta)
+        
         
     else:
         flash('Acceso no autorizado')
