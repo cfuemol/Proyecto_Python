@@ -116,11 +116,56 @@ def dashboard_cliente():
    
     if 'username' in session and session.get('rol') == 'cliente':
         dni = session.get('dni')
-        return render_template('usuario/dashboard_cliente.html',dni=dni)
+
+        # Sacar nombre y apellidos desde la lista de usuarios
+
+        lista_usuarios = bd.lista_usuarios(usuarios_col)
+
+        for usuario in lista_usuarios:
+            if usuario['dni'] == dni:
+                nombre = usuario['nombre']
+                apellidos = usuario['apellidos']
+
+        cuentas_cliente = []
+        saldo_total = 0.0
+
+        cuentas = bd.lista_cuentas(cuentas_col)
+
+        for cuenta in cuentas:
+            if cuenta['dni_titular'] == dni:
+                cuentas_cliente.append(cuenta)
+                saldo_total += float(cuenta['saldo'])
+                saldo_total = round(saldo_total,2)
+
+        return render_template('usuario/dashboard_cliente.html',nombre=nombre,apellidos=apellidos,cuentas_cliente=cuentas_cliente,num_cuentas=len(cuentas_cliente),saldo_total=saldo_total)
     
     else:
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
+    
+@app.route('/transferencias')
+def transferencias():
+
+    if 'username' in session and session.get('rol') == 'cliente':
+        dni = session.get('dni')
+
+        # Obtener transferencias realizadas desde cuentas del cliente
+
+        lista_transfer = bd.lista_transacciones(transacciones_col)
+
+        user_transfer = []
+
+        for transfer in lista_transfer:
+            if transfer['dni_ordena'] == dni:
+                user_transfer.append(transfer)
+
+        return render_template('usuario/transferencia.html', user_transfer=user_transfer)
+    
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout'))
+    
+
 
     
 # END POINTS ADMINISTRADOR #
@@ -243,10 +288,11 @@ def mostrar_cuentas(cliente):
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
     
-@app.route('/cuentas_cliente/<cliente>/crear_cuenta')
-def crear_cuenta(cliente):
-    datos_cliente = usuarios_col.find_one({'dni' : cliente})
+
     
+@app.route('/crear_cuenta/<dni>')
+def crear_cuenta(dni):
+    datos_cliente = usuarios_col.find_one({'dni' : dni})    
         
     cuentas = bd.lista_cuentas(cuentas_col)
     fecha = date.today()
@@ -274,7 +320,7 @@ def crear_cuenta(cliente):
         bd.insertar_cuenta(cuenta_nueva)
         flash('Cuenta creada correctamente')
 
-    return redirect(url_for('mostrar_cuentas',cliente=cliente))
+    return redirect(url_for('mostrar_cuentas',cliente=dni))
 
 @app.route('/editar_cuenta/<id_cuenta>',methods=['GET','POST'])
 def editar_cuenta(id_cuenta):

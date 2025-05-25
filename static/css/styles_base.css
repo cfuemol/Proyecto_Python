@@ -83,7 +83,7 @@ body {
   margin-left: 200px;
 }
 
-.div_title .bienvenida {
+.div_title, .bienvenida {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
@@ -140,6 +140,7 @@ body {
 .table_info {
   width: 70%;
   margin: 0 auto;
+  margin-top: 20px;
   border-collapse: collapse;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -149,7 +150,7 @@ body {
 
 .table_info th, .table_info td {
   padding: 12px 15px;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid #ddd;
 }
 
