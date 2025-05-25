@@ -323,7 +323,7 @@ def mostrar_cuentas(cliente):
         cuentas = bd.lista_cuentas(cuentas_col)
         cuentas_cliente=[]
         cliente_found = None
-        contador = 0
+       
         for elemento in usuarios:
             if elemento['dni'] == cliente:
                 cliente_found = elemento
@@ -332,7 +332,7 @@ def mostrar_cuentas(cliente):
             for cuenta in cuentas:
                 if cliente_found['dni'] ==cuenta['dni_titular']:
                     cuentas_cliente.append(cuenta)
-            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente, contador=contador, cliente_found=cliente_found)
+            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found)
         else:
             return render_template('404.html')
     
@@ -394,13 +394,35 @@ def editar_cuenta(id_cuenta):
                         'fecha_titular' : datos_cuenta['fecha_titular']}
                 }
             )
-        
+            
             flash('Usuario actualizado correctamente')
             return redirect(url_for('mostrar_cuentas', cliente=datos_cuenta['dni_titular']))
-       
-        datos_cuenta= cuentas_col.find_one({'id_cuenta':id_cuenta})
-
-        return render_template('cuentas_cliente.html',cliente=datos_cuenta['dni_titular'])
+        
+        cuenta_cliente= []
+        cuentas_cliente=[]
+        
+        cuentas = bd.lista_cuentas(cuentas_col) 
+        usuarios = bd.lista_usuarios(usuarios_col)
+        for cuenta in cuentas:
+            if cuenta['id_cuenta']==id_cuenta:
+                cuenta_cliente.append(cuenta)
+                break
+        
+        cliente_found = None
+        
+        for elemento in usuarios:
+            if elemento['dni'] == cuenta_cliente['dni_titular']:
+                cliente_found = elemento
+                break
+        if cliente_found:
+            for cuenta in cuentas:
+                if cliente_found['dni'] ==cuenta['dni_titular']:
+                    cuentas_cliente.append(cuenta)
+            
+            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found)
+        else:
+            return render_template('404.html')
+        
     else:
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
