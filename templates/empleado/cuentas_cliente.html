@@ -1,4 +1,3 @@
-
 {% extends 'empleado/dashboard_empleado.html' %}
 
 {% block titulo %}Cuentas {% endblock %}
@@ -19,7 +18,7 @@
             <tbody>
                 {% for cuenta in cuentas %}
                     <tr>
-                        <td>{{ contador + 1 }}</td>
+                        <td>{{ loop.index }}</td>
                         <td>{{ cuenta['id_cuenta']}}</td>
                         <td>{{ cuenta['saldo'] }}</td>
                     </tr>
@@ -27,7 +26,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td><a href="{{url_for('crear_cuenta', dni=cuentas[0].dni)}}">Crear Cuenta</a></td>
+                    <td><a href="{{url_for('crear_cuenta', dni=cliente_found['dni'])}}">Crear Cuenta</a></td>
                 </tr>
             </tfoot>
            

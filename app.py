@@ -235,7 +235,7 @@ def mostrar_cuentas(cliente):
             for cuenta in cuentas:
                 if cliente_found['dni'] ==cuenta['dni_titular']:
                     cuentas_cliente.append(cuenta)
-            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente, contador=contador)
+            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente, contador=contador, cliente_found=cliente_found)
         else:
             return render_template('404.html')
     
@@ -243,7 +243,7 @@ def mostrar_cuentas(cliente):
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
     
-@app.route('/crear_cuenta')
+@app.route('/crear_cuenta/<dni>')
 def crear_cuenta(dni):
     datos_cliente = usuarios_col.find_one({'dni' : dni})
     
@@ -257,10 +257,13 @@ def crear_cuenta(dni):
         'id_cuenta':cuentas[-1]['id_cuenta']+1,
         'dni_titular':datos_cliente['dni'],
         'telefono' : datos_cliente['telefono'],
-        'fecha_titular':fecha_norm,
-        'saldo':0
+        'saldo':0,
+        'fecha_titular':fecha_norm        
     }
     bd.insertar_cuenta(cuenta_nueva)
+    flash('Cuenta creada correctamente')
+
+    return redirect(url_for('mostrar_cuentas',cliente=dni))
 
 
 
