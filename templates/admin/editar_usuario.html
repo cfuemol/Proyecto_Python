@@ -3,7 +3,7 @@
 {% block title_pag %}
     <div class="div_title">
         <div class="bienvenida">
-            Editar datos de usuario
+            Editar datos de {{usuario.nombre}} {{usuario.apellidos}}
         </div>
     </div>
 {% endblock %}
@@ -11,12 +11,12 @@
 {% block contenido %}
     <form method="POST" class="tarjeta_usuario">
         <label>Nombre:</label>
-        <input type="text" name="nombre" value="{{ usuario.nombre }}" placeholder="{{ usuario.nombre }}" class="form-input" required>
+        <input type="text" name="nombre" value="{{ usuario.nombre }}" class="form-input" required>
 
         <label>Apellidos:</label>
-        <input type="text" name="apellidos" value="{{ usuario.apellidos }}" placeholder="{{ usuario.apellidos }}" class="form-input" required>
+        <input type="text" name="apellidos" value="{{ usuario.apellidos }}" class="form-input" required>
 
-        <label>Rol:</label>
+        <label>Selecciona el rol del usuario:</label>
         <select name="rol" required class="form-input">
             <option value="admin" {% if usuario.rol == 'admin' %}selected{% endif %}>Admin</option>
             <option value="empleado" {% if usuario.rol == 'empleado' %}selected{% endif %}>Empleado</option>

@@ -179,7 +179,8 @@ def admin_editar_usuario(user):
             flash('Usuario actualizado correctamente')
             return redirect(url_for('admin_user', usuario=user))
         
-        return render_template('admin/editar_usuario.html', usuario=user)
+        datos_usuario = usuarios_col.find_one({'dni' : user})        
+        return render_template('admin/editar_usuario.html', usuario=datos_usuario)
 
     else:
         flash('Acceso no autorizado')
