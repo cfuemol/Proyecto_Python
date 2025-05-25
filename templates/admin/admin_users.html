@@ -18,6 +18,7 @@
             <th>Teléfono</th>
             <th>E-mail</th>
             <th>Username</th>
+            <th>Rol</th>
             <th>Acciones</th>
         </tr>
 
@@ -29,6 +30,7 @@
             <td>{{ usuario.telefono }}</td>
             <td>{{ usuario.email }}</td>
             <td>{{ usuario.username }}</td>
+            <td>{{ usuario.rol }}</td>
             <td>
                 <div>
                     <a href="{{ url_for('admin_editar_usuario', user=usuario.dni) }}" class="btn-editar">Editar</a>

@@ -10,7 +10,7 @@ body {
   width: 60px;
   height: 100vh;
   background-color: #1e1e2f;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease; 
   overflow: hidden;
 }
 
@@ -125,7 +125,7 @@ body {
   display: inline-block;
   padding: 10px 20px;
   margin-bottom: 5px;
-  background-color: red;
+  background-color: #e53935;
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -161,4 +161,16 @@ body {
 
 .table_info tr:hover {
   background-color: #f1f1f1;
+}
+
+/*-----------------------------------Formulario Editar Usuarios-------------------------------*/
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
 }

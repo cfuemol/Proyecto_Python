@@ -9,13 +9,21 @@
 {% endblock %}
 
 {% block contenido %}
-    <form method="POST">
+    <form method="POST" class="tarjeta_usuario">
         <label>Nombre:</label>
-        <input type="text" name="nombre" value="{{ usuario.nombre }}" required>
+        <input type="text" name="nombre" value="{{ usuario.nombre }}" placeholder="{{ usuario.nombre }}" class="form-input" required>
 
-        <label>Email:</label>
-        <input type="email" name="email" value="{{ usuario.email }}" required>
+        <label>Apellidos:</label>
+        <input type="text" name="apellidos" value="{{ usuario.apellidos }}" placeholder="{{ usuario.apellidos }}" class="form-input" required>
 
-        <button type="submit" class="btn">Guardar cambios</button>
+        <label>Rol:</label>
+        <select name="rol" required class="form-input">
+            <option value="admin" {% if usuario.rol == 'admin' %}selected{% endif %}>Admin</option>
+            <option value="empleado" {% if usuario.rol == 'empleado' %}selected{% endif %}>Empleado</option>
+            <option value="cliente" {% if usuario.rol == 'cliente' %}selected{% endif %}>Cliente</option>
+        </select>
+
+        <button type="submit" class="btn-editar">Guardar cambios</button>
+        <a href="/admin_users" class="btn">Volver</a>
     </form>
 {% endblock %}
