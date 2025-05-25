@@ -322,6 +322,7 @@ def crear_cuenta(dni):
 
     return redirect(url_for('mostrar_cuentas',cliente=dni))
 
+
 @app.route('/editar_cuenta/<id_cuenta>',methods=['GET','POST'])
 def editar_cuenta(id_cuenta):
     if 'username' in session and session.get('rol') == 'empleado':
@@ -345,7 +346,7 @@ def editar_cuenta(id_cuenta):
             flash('Usuario actualizado correctamente')
             return redirect(url_for('mostrar_cuentas', cliente=datos_cuenta['dni_titular']))
        
-        datos_cuenta= cuentas_col.find_one({'id_cuenta':str(id_cuenta)})
+        datos_cuenta= cuentas_col.find_one({'id_cuenta':id_cuenta})
 
         return render_template('cuentas_cliente.html',cliente=datos_cuenta['dni_titular'])
     else:
