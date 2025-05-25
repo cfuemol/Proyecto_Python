@@ -235,7 +235,7 @@ def mostrar_cuentas(cliente):
             for cuenta in cuentas:
                 if cliente_found['dni'] ==cuenta['dni_titular']:
                     cuentas_cliente.append(cuenta)
-            return render_template('empleado/cuentas_cliente.html',cliente_found=cliente_found, cuentas=cuentas_cliente, contador=contador)
+            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente, contador=contador)
         else:
             return render_template('404.html')
     
@@ -244,18 +244,21 @@ def mostrar_cuentas(cliente):
         return redirect(url_for('logout'))
     
 @app.route('/crear_cuenta')
-
-def crear_cuenta():
+def crear_cuenta(dni):
+    datos_cliente = usuarios_col.find_one({'dni' : dni})
+    
+        
     cuentas = bd.lista_cuentas(cuentas_col)
     fecha = date.today()
     fecha_norm = fecha.strftime('%d/%m/%Y')
-    cliente= request.args.get('cliente')
+    
+
     cuenta_nueva={
         'id_cuenta':cuentas[-1]['id_cuenta']+1,
-        'dni_titular': cliente[2],
-        'telefono' : cliente[4],
+        'dni_titular':datos_cliente['dni'],
+        'telefono' : datos_cliente['telefono'],
         'fecha_titular':fecha_norm,
-        'saldo':0.00
+        'saldo':0
     }
     bd.insertar_cuenta(cuenta_nueva)
 

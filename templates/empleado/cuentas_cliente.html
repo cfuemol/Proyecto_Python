@@ -4,7 +4,7 @@
 {% block titulo %}Cuentas {% endblock %}
 
 {% block main %}
-<h1>Cuentas del Cliente {{cliente_found['nombre']}} {{cliente_found['apellidos']}} </h1>
+<h1>Cuentas del Cliente con DNI {{cuentas[0]['dni_titular']}} </h1>
 <div>
     
     <div>
@@ -27,7 +27,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td><a href="{{url_for('crear_cuenta')}}">Crear Cuenta</a></td>
+                    <td><a href="{{url_for('crear_cuenta', dni=cuentas[0].dni)}}">Crear Cuenta</a></td>
                 </tr>
             </tfoot>
            
