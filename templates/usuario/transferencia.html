@@ -3,12 +3,24 @@
 {% block title_pag %}
     <div class="div_title">
         <div class="bienvenida">
-            Área Cliente - Transferencias realizadas por el cliente
+            Área Cliente - Transferencias realizadas
         </div>
     </div>
 {% endblock %}
 
 {% block contenido %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li style="color: red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    
     <table class="table_info">
         <tr>
             <th>ID Transfer</th>
@@ -20,6 +32,23 @@
             <th>Monto</th>
         </tr>
 
-        {% for transfer in%}
+        {% for transfer in user_transfer %}
+            <tr>
+                <td>{{ transfer.id_transfer }}</td>
+                <td>{{ transfer.dni_ordena }}</td>
+                <td>{{ transfer.cuenta_origen }}</td>
+                <td>{{ transfer.cuenta_destino }}</td>
+                <td>{{ transfer.concepto }}</td>
+                <td>{{ transfer.fecha }}</td>
+                <td>{{ transfer.monto }}</td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td colspan="7">
+                    <div>
+                        <a href="{{ url_for('crear_transfer', dni=session['dni']) }}" class="btn-editar">Crear Transferencia</a>
+                    </div>
+                </td>
+            </tr>
     </table>
 {% endblock %}

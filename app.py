@@ -11,9 +11,7 @@ bd = BaseDatos()
 
 usuarios_col = bd.obtener_colecciones('usuarios')
 cuentas_col = bd.obtener_colecciones('cuenta_bancaria')
-transacciones_col = bd.obtener_colecciones('transacciones')
-
-
+transacciones_col = bd.obtener_colecciones('transaccion')
 
 
 @app.route('/', methods=['GET','POST'])
@@ -42,8 +40,6 @@ def login():
                 'password' : passwd_hash,
                 'rol' : 'cliente'
             }
-
-            print(dict_usuario)
 
             # Usuarios en formato lista
             usuarios = bd.lista_usuarios(usuarios_col)
@@ -165,9 +161,65 @@ def transferencias():
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
     
+@app.route('/transferencias/<dni>', methods=['GET','POST'])
+def crear_transfer(dni):
 
+    cuentas_cliente = list(cuentas_col.find({'dni_titular': dni.upper()}))
 
+    if request.method == 'POST':
+        cuenta_origen_id = int(request.form.get('cuenta_origen'))
+        cuenta_destino_id = int(request.form.get('cuenta_destino'))
+        concepto = request.form.get('concepto')
+        monto = float(request.form.get('monto'))
+
+        cuenta_origen = cuentas_col.find_one({'id_cuenta' : cuenta_origen_id})
+        cuenta_destino = cuentas_col.find_one({'id_cuenta' : cuenta_destino_id})
+
+        if not cuenta_origen or not cuenta_destino:
+            flash('La cuenta de origen o destino es inválida')
+            return render_template('usuario/transferencia.html')
+        
+        if cuenta_origen['saldo'] < monto:
+            flash('Saldo insuficiente')
+            return redirect(url_for('transferencias'))
+        
+        # Actualizar saldos
+        cuentas_col.update_one(
+            {'id_cuenta' : cuenta_origen_id},
+            {'$inc' : {'saldo' : -monto}}
+        )
+
+        cuentas_col.update_one(
+            {'id_cuenta' : cuenta_destino_id},
+            {'$inc' : {'saldo' : +monto}}
+        )
+
+        # Registrar transferencias
+        lista_transfers = bd.lista_transacciones(transacciones_col)
+
+        if lista_transfers:
+            # Sacamos el último id_transfer de la lista y le sumamos 1, así es autonumérico
+            next_id = lista_transfers[-1]['id_transfer'] + 1
+        else:
+            next_id = 1
+
+        nueva_transfer = {
+            'id_transfer' : next_id,
+            'cuenta_origen' : cuenta_origen_id,
+            'cuenta_destino' : cuenta_destino_id,
+            'dni_ordena' : dni,
+            'concepto' : concepto,
+            'monto' : monto,
+            'fecha' : date.today().strftime('%d/%m/%Y')
+        }
+
+        transacciones_col.insert_one(nueva_transfer)
+        flash('Transferencia realizada correctamente')
+        return redirect(url_for('transferencias'))
     
+    return render_template('usuario/crear_transferencia.html', cuentas=cuentas_cliente, transfer={})
+
+
 # END POINTS ADMINISTRADOR #
 
 @app.route('/dashboard_admin')
@@ -365,6 +417,7 @@ def eliminar_cuenta(id_cuenta):
         else:
             flash('Acceso no autorizado')
             return redirect(url_for('logout'))
+        
 # END POINT LOGOUT #
 
 @app.route('/logout')

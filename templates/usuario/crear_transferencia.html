@@ -1,0 +1,37 @@
+{% extends 'usuario/dashboard_cliente.html' %}
+
+{% block title_pag %}
+    <div class="div_title">
+        <div class="bienvenida">
+            Crear Transferencia
+        </div>
+    </div>
+{% endblock %}
+
+{% block contenido %}
+
+<form method="POST" class="tarjeta_usuario">
+        <label>Cuenta Destino:</label>
+        <input type="text" name="cuenta_destino" value="{{ transfer.cuenta_destino }}" class="form-input" required>
+
+        <label>Concepto:</label>
+        <input type="text" name="concepto" value="{{ transfer.concepto }}" class="form-input" required>
+
+        <label>Monto:</label>
+        <input type="number" name="monto" step="0.01" value="{{ transfer.monto }}" class="form-input" required>
+
+        <label>Cuenta de Origen:</label>
+        <select name="cuenta_origen" required class="form-input">
+            {% for cuenta in cuentas %}
+            <option value="{{ cuenta.id_cuenta}}">
+                Cuenta Nº {{ cuenta.id_cuenta }} — Saldo: {{ cuenta.saldo }} €
+            </option>
+
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn-editar">Guardar cambios</button>
+        <a href="/dashboard_cliente" class="btn">Volver</a>
+    </form>
+
+{% endblock %}
