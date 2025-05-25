@@ -164,15 +164,15 @@ def admin_editar_usuario(user):
             edit_user = {
                 'nombre' : request.form.get('nombre').title(),
                 'apellidos' : request.form.get('apellidos').title(),
-                'rol' : request.form.get('rol')
+                'rol' : request.form.get('rol').lower()
             }
             
             usuarios_col.update_one(
-                {'dni' : user['dni']},
+                {'dni' : user},
                 {'$set' :
-                    {   'nombre': edit_user['nombre'],
-                        'apellidos' : edit_user['apellidos'],
-                        'rol' : edit_user['rol']}
+                    {   'nombre': edit_user['nombre'].title(),
+                        'apellidos' : edit_user['apellidos'].title(),
+                        'rol' : edit_user['rol'].lower()}
                 }
             )
 
