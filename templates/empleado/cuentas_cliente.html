@@ -1,3 +1,4 @@
+
 {% extends 'empleado/dashboard_empleado.html' %}
 
 {% block titulo %}Cuentas {% endblock %}
@@ -21,12 +22,22 @@
                         <td>{{ loop.index }}</td>
                         <td>{{ cuenta['id_cuenta']}}</td>
                         <td>{{ cuenta['saldo'] }}</td>
+                        <td>
+                            <div>
+                                <a href="{{ url_for('editar_cuenta', id_cuenta=cuenta['id_cuenta']) }}" class="btn-editar">Editar</a>
+                            </div>
+                            <div>
+                                <form action="{{ url_for('eliminar_cuenta', id_cuenta=cuenta['id_cuenta']) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta cuenta?');">
+                                    <button type="submit" class="btn-submit">Eliminar</button>
+                                </form>
+                            </div> 
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
-                    <td><a href="{{url_for('crear_cuenta', dni=cliente_found['dni'])}}">Crear Cuenta</a></td>
+                    <td><a href="{{url_for('crear_cuenta', cliente=cliente_found['dni'])}}">Crear Cuenta</a></td>
                 </tr>
             </tfoot>
            

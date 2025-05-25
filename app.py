@@ -243,30 +243,81 @@ def mostrar_cuentas(cliente):
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
     
-@app.route('/crear_cuenta/<dni>')
-def crear_cuenta(dni):
-    datos_cliente = usuarios_col.find_one({'dni' : dni})
+@app.route('/cuentas_cliente/<cliente>/crear_cuenta')
+def crear_cuenta(cliente):
+    datos_cliente = usuarios_col.find_one({'dni' : cliente})
     
         
     cuentas = bd.lista_cuentas(cuentas_col)
     fecha = date.today()
     fecha_norm = fecha.strftime('%d/%m/%Y')
     
-
-    cuenta_nueva={
-        'id_cuenta':cuentas[-1]['id_cuenta']+1,
-        'dni_titular':datos_cliente['dni'],
+    if not cuentas:
+        cuenta_nueva={
+        'id_cuenta':1,
+        'dni_titular':datos_cliente['dni'].upper(),
         'telefono' : datos_cliente['telefono'],
         'saldo':0,
         'fecha_titular':fecha_norm        
-    }
-    bd.insertar_cuenta(cuenta_nueva)
-    flash('Cuenta creada correctamente')
+        }
+        bd.insertar_cuenta(cuenta_nueva)
+        flash('Cuenta creada correctamente') 
+    
+    else:
+        cuenta_nueva={
+            'id_cuenta':cuentas[-1]['id_cuenta']+1,
+            'dni_titular':datos_cliente['dni'].upper(),
+            'telefono' : datos_cliente['telefono'],
+            'saldo':0,
+            'fecha_titular':fecha_norm        
+        }
+        bd.insertar_cuenta(cuenta_nueva)
+        flash('Cuenta creada correctamente')
 
-    return redirect(url_for('mostrar_cuentas',cliente=dni))
+    return redirect(url_for('mostrar_cuentas',cliente=cliente))
 
+@app.route('/editar_cuenta/<id_cuenta>',methods=['GET','POST'])
+def editar_cuenta(id_cuenta):
+    if 'username' in session and session.get('rol') == 'empleado':
+        if request.method == 'POST':
+            fecha = date.today()
+            fecha_norm = fecha.strftime('%d/%m/%Y')
+            datos_cuenta ={
+                'dni_titular':request.form.get('dni_nuevo'),
+                'telefono':request.form.get('telefono_nuevo'),
+                'fecha_titular':fecha_norm
+            }
+            cuentas_col.update_one(
+                {'id_cuenta' : id_cuenta},
+                {'$set' :
+                    {   'dni_titular': datos_cuenta['dni_titular'].upper(),
+                        'telefono' : datos_cuenta['telefono'],
+                        'fecha_titular' : datos_cuenta['fecha_titular']}
+                }
+            )
+        
+            flash('Usuario actualizado correctamente')
+            return redirect(url_for('mostrar_cuentas', cliente=datos_cuenta['dni_titular']))
+       
+        datos_cuenta= cuentas_col.find_one({'id_cuenta':str(id_cuenta)})
 
+        return render_template('cuentas_cliente.html',cliente=datos_cuenta['dni_titular'])
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout'))
 
+@app.route('/borrar_cuenta/<id_cuenta>')
+def eliminar_cuenta(id_cuenta):
+
+        if 'username' in session and session.get('rol') == 'empleado':
+            datos_cuenta = cuentas_col.find_one({'id_cuenta' :id_cuenta})
+            usuarios_col.delete_one({'id_cuenta' : id_cuenta})
+            flash('Usuario eliminado con éxito')
+            return redirect(url_for('mostrar_cuentas',cliente=datos_cuenta['dni_titular']))
+    
+        else:
+            flash('Acceso no autorizado')
+            return redirect(url_for('logout'))
 # END POINT LOGOUT #
 
 @app.route('/logout')

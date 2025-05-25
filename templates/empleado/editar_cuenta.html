@@ -1,0 +1,40 @@
+
+{% extends 'empleado/dashboard_empleado.html' %}
+
+{% block titulo %}Cuentas {% endblock %}
+
+{% block main %}
+<h1>Cuenta Nº {{ cuenta['id_cuenta'] }} </h1>
+<div>
+    
+    <div>
+        
+
+        
+        <table class="table_info">
+            <form action="POST">
+            <tbody>
+                <tr>
+                    <td> <label for="dni_nuevo">DNI:</label> </td>
+                    <input pattern="[0-9]{8}[a-zA-Z]{1}" id="dni_nuevo" name="dni_nuevo" required placeholder="DNI tipo 12345678Z">
+                    
+                </tr>
+                <tr>
+                    <td><label for="telefono_nuevo">Teléfono:</label></td>
+                    <input type="tel" id="telefono_nuevo" name="telefono_nuevo" required placeholder="Teléfono	600123456">
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><button type="submit" class="btn-editar">Enviar</button>
+                        <button type="reset" class="btn-submit">Borrar</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </form>   
+        </table>
+       
+    </div>
+</div>
+
+{% endblock %}
