@@ -1,0 +1,25 @@
+{% extends 'usuario/dashboard_cliente.html' %}
+
+{% block title_pag %}
+    <div class="div_title">
+        <div class="bienvenida">
+            Área Cliente - Transferencias realizadas por el cliente
+        </div>
+    </div>
+{% endblock %}
+
+{% block contenido %}
+    <table class="table_info">
+        <tr>
+            <th>ID Transfer</th>
+            <th>DNI Ordenante</th>
+            <th>Cuenta Origen</th>
+            <th>Cuenta Destino</th>
+            <th>Concepto</th>
+            <th>Fecha</th>
+            <th>Monto</th>
+        </tr>
+
+        {% for transfer in%}
+    </table>
+{% endblock %}

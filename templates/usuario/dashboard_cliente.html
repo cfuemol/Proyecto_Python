@@ -12,11 +12,9 @@
 <body>
   <div class="sidebar" id="sidebar">
     <ul>
-      <li><a href="Index.html"><i class="fas fa-home"></i><span class="text">Inicio</span></a></li>
-      <li><a href="perfil.html"><i class="fas fa-user"></i><span class="text">Ver cuentas</span></a></li>
+      <li><a href="{{ url_for('dashboard_cliente')}}"><i class="fas fa-home"></i><span class="text">Inicio</span></a></li>
       <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i><span class="text">Transferencia</span></a></li>
       <li><a href="graficas.html"><i class="fas fa-chart-line"></i><span class="text">Efectivo</span></a></li>
-      <li><a href="configuracion.html"><i class="fas fa-cog"></i><span class="text">Configuración</span></a></li>
       <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i><span class="text">Salir</span></a></li>
     </ul>
   </div>
@@ -26,14 +24,14 @@
     {% block title_pag %}
       <div class="div_title">
         <div class="bienvenida">
-          Menú Cliente
+          Área Cliente
         </div>
       </div>
     {% endblock %}
 
     {% block contenido %}
       <div class="tarjeta_usuario">
-        <div class="img_tarjeta">
+        <div class="bienvenida">
           <p>Bienvenido/a/e {{ nombre }} {{ apellidos }}</p>
           <p>Eres titular de {{ num_cuentas }} cuentas </p>
           <p>Saldo Total de las cuentas: {{ saldo_total }} €</p>

@@ -119,8 +119,13 @@ def dashboard_cliente():
 
         # Sacar nombre y apellidos desde la lista de usuarios
 
-        nombre = session.get('nombre')
-        apellidos = session.get('apellidos')
+        lista_usuarios = bd.lista_usuarios(usuarios_col)
+
+        for usuario in lista_usuarios:
+            if usuario['dni'] == dni:
+                nombre = usuario['nombre']
+                apellidos = usuario['apellidos']
+
         cuentas_cliente = []
         saldo_total = 0.0
 
@@ -137,6 +142,30 @@ def dashboard_cliente():
     else:
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
+    
+@app.route('/transferencias')
+def transferencias():
+
+    if 'username' in session and session.get('rol') == 'cliente':
+        dni = session.get('dni')
+
+        # Obtener transferencias realizadas desde cuentas del cliente
+
+        lista_transfer = bd.lista_transacciones(transacciones_col)
+
+        user_transfer = []
+
+        for transfer in lista_transfer:
+            if transfer['dni_ordena'] == dni:
+                user_transfer.append(transfer)
+
+        return render_template('usuario/transferencia.html', user_transfer=user_transfer)
+    
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout'))
+    
+
 
     
 # END POINTS ADMINISTRADOR #
@@ -261,8 +290,7 @@ def mostrar_cuentas(cliente):
     
 @app.route('/crear_cuenta/<dni>')
 def crear_cuenta(dni):
-    datos_cliente = usuarios_col.find_one({'dni' : dni})
-    
+    datos_cliente = usuarios_col.find_one({'dni' : dni})    
         
     cuentas = bd.lista_cuentas(cuentas_col)
     fecha = date.today()
@@ -280,7 +308,6 @@ def crear_cuenta(dni):
     flash('Cuenta creada correctamente')
 
     return redirect(url_for('mostrar_cuentas',cliente=dni))
-
 
 
 # END POINT LOGOUT #
