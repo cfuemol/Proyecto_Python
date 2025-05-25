@@ -116,7 +116,23 @@ def dashboard_cliente():
    
     if 'username' in session and session.get('rol') == 'cliente':
         dni = session.get('dni')
-        return render_template('usuario/dashboard_cliente.html',dni=dni)
+
+        # Sacar nombre y apellidos desde la lista de usuarios
+
+        nombre = session.get('nombre')
+        apellidos = session.get('apellidos')
+        cuentas_cliente = []
+        saldo_total = 0.0
+
+        cuentas = bd.lista_cuentas(cuentas_col)
+
+        for cuenta in cuentas:
+            if cuenta['dni_titular'] == dni:
+                cuentas_cliente.append(cuenta)
+                saldo_total += float(cuenta['saldo'])
+                saldo_total = round(saldo_total,2)
+
+        return render_template('usuario/dashboard_cliente.html',nombre=nombre,apellidos=apellidos,cuentas_cliente=cuentas_cliente,num_cuentas=len(cuentas_cliente),saldo_total=saldo_total)
     
     else:
         flash('Acceso no autorizado')

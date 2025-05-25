@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio</title>
+  <title>Área Cliente</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="../../static/css/styles_base.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_base.css') }}">
 </head>
 
 <body>
@@ -17,14 +17,14 @@
       <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i><span class="text">Transferencia</span></a></li>
       <li><a href="graficas.html"><i class="fas fa-chart-line"></i><span class="text">Efectivo</span></a></li>
       <li><a href="configuracion.html"><i class="fas fa-cog"></i><span class="text">Configuración</span></a></li>
-      <li><a href="{{url_for('logout')}}"><i class="fas fa-sign-out-alt"></i><span class="text">Salir</span></a></li>
+      <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i><span class="text">Salir</span></a></li>
     </ul>
   </div>
 
   <div class="div_cuerpo">
 
     {% block title_pag %}
-      <div class="div-title">
+      <div class="div_title">
         <div class="bienvenida">
           Menú Cliente
         </div>
@@ -32,18 +32,37 @@
     {% endblock %}
 
     {% block contenido %}
+      <div class="tarjeta_usuario">
+        <div class="img_tarjeta">
+          <p>Bienvenido/a/e {{ nombre }} {{ apellidos }}</p>
+          <p>Eres titular de {{ num_cuentas }} cuentas </p>
+          <p>Saldo Total de las cuentas: {{ saldo_total }} €</p>
+        </div>
+      </div>
 
-    <div class="tarjeta_usuario">
-      <p>Bienvenido/a/e {{ nombre }} {{ apellidos }}</p>
-      <p>Eres titular de {{ num_cuentas }} cuentas </p>
-      <p>Saldo Total de las cuentas: {{ saldo_total }}</p>
-    </div>
+      {% if cuentas_cliente %}
+        <table class="table_info">
+          <tr>
+            <th>N°</th>
+            <th>ID Cuenta</th>
+            <th>Saldo</th>
+          </tr>
+
+          {% for cuenta in cuentas_cliente %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ cuenta['id_cuenta'] }}</td>
+              <td>{{ cuenta['saldo'] }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p>No tienes cuentas registradas</p>
+      {% endif %}
+
     {% endblock %}
+
   </div>
-
-
-
-
 </body>
 
 </html>
