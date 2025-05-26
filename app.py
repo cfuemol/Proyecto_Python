@@ -379,15 +379,16 @@ def crear_cuenta(dni):
 def editar_cuenta(id_cuenta):
     if 'username' in session and session.get('rol') == 'empleado':
         if request.method == 'POST':
+            
             fecha = date.today()
             fecha_norm = fecha.strftime('%d/%m/%Y')
             datos_cuenta ={
-                'dni_titular':request.form.get('dni_nuevo'),
+                'dni_titular':request.form.get('dni_nuevo').upper(),
                 'telefono':request.form.get('telefono_nuevo'),
                 'fecha_titular':fecha_norm
             }
             cuentas_col.update_one(
-                {'id_cuenta' : id_cuenta},
+                {'id_cuenta' : int(id_cuenta)},
                 {'$set' :
                     {   'dni_titular': datos_cuenta['dni_titular'].upper(),
                         'telefono' : datos_cuenta['telefono'],
@@ -399,7 +400,7 @@ def editar_cuenta(id_cuenta):
             return redirect(url_for('mostrar_cuentas', cliente=datos_cuenta['dni_titular']))
         
         
-            
+        print(f'id_cuenta: {id_cuenta}')
         return render_template('empleado/editar_cuenta.html', id_cuenta=id_cuenta)
         
         
