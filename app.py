@@ -461,7 +461,7 @@ def editar_cuenta(id_cuenta):
             )
             
             flash('Usuario actualizado correctamente')
-            return redirect(url_for('mostrar_cuentas', cliente=datos_cuenta['dni_titular']))
+            return redirect(url_for('dashboard_empleado'))
         
         
         cuenta_cliente=cuentas_col.find_one({'id_cuenta':int(id_cuenta)})
