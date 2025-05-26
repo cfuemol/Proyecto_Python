@@ -232,55 +232,47 @@ def crear_transfer(dni):
 
 @app.route('/efectivo', methods=['GET', 'POST'])
 def efectivo():
-
     if 'username' in session and session.get('rol') == 'cliente':
         dni = session.get('dni')
-
         cuentas_cliente = cuentas_col.find({'dni_titular': dni})
 
         if request.method == 'POST':
             cuenta_id = int(request.form.get('cuenta_origen'))
             monto = float(request.form.get('monto'))
 
-            cuenta_origen = cuentas_col.find_one({'id_cuenta' : cuenta_id})
-            
+            cuenta_origen = cuentas_col.find_one({'id_cuenta': cuenta_id})
+
             if not cuenta_origen:
                 flash('La cuenta de origen es inválida')
                 return render_template('usuario/efectivo.html')
-            
-            if cuenta_origen['saldo'] > 0:
-            
-                if monto > cuenta_origen['saldo']:
-                    flash('Saldo insuficiente')
-                    return redirect(url_for('efectivo'))
 
-                else:           
-                    # Actualizar saldos
+            if monto < 0:
+                if cuenta_origen['saldo'] < abs(monto):
+                    flash('Saldo insuficiente para realizar el retiro.')
+                    return render_template('usuario/efectivo.html', cuentas=cuentas_cliente)
 
-                    cuentas_col.update_one(
-                        {'id_cuenta' : cuenta_id},
-                        {'$inc' : {'saldo' : +monto}}
-                    )
-
-                    flash('Operación de efectivo realizada correctamente')
-                    return redirect(url_for('efectivo'))
-            
-            else:
-                # Actualizar saldos
-
+                # Realizar el retiro utilizando $inc
                 cuentas_col.update_one(
-                    {'id_cuenta' : cuenta_id},
-                    {'$inc' : {'saldo' : +monto}}
+                    {'id_cuenta': cuenta_id},
+                    {'$inc': {'saldo': monto}}  # monto es negativo
                 )
+                flash('Retiro realizado correctamente')
 
-                flash('Operación de efectivo realizada correctamente')
-                return redirect(url_for('efectivo'))
-        
+            else:
+                # Realizar el ingreso utilizando $inc
+                cuentas_col.update_one(
+                    {'id_cuenta': cuenta_id},
+                    {'$inc': {'saldo': monto}}  # monto es positivo
+                )
+                flash('Ingreso realizado correctamente')
+
+            return redirect(url_for('efectivo'))
+
         return render_template('usuario/efectivo.html', cuentas=cuentas_cliente)
-    
-    else:
-        flash('Acceso no autorizado')
-        return redirect(url_for('logout'))
+
+    flash('Acceso no autorizado')
+    return redirect(url_for('logout'))
+
 
 
 # END POINTS ADMINISTRADOR #
