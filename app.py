@@ -400,9 +400,8 @@ def mostrar_cuentas(cliente):
             for cuenta in cuentas:
                 if cliente_found['dni'] ==cuenta['dni_titular']:
                     cuentas_cliente.append(cuenta)
-
-        for saldo in cuentas_cliente:
-            total_saldo+=saldo['saldo']
+                    total_saldo += cuenta['saldo']
+        
             return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found,total_saldo=total_saldo,user=user)
         else:
             return render_template('404.html')

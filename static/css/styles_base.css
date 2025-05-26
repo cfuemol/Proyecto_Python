@@ -182,3 +182,11 @@ body {
 .message{
   color: red;
 }
+
+
+/*----------------------------------Enlaces---------------------------------*/
+
+a{
+  text-decoration: none;
+  color:white;
+}
