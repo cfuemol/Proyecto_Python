@@ -442,6 +442,7 @@ def editar_cuenta(id_cuenta):
     if 'username' in session and session.get('rol') == 'empleado':
         dni = session.get('dni')
         user =usuarios_col.find_one({'dni':dni})
+
         if request.method == 'POST':
             
             fecha = date.today()
@@ -451,6 +452,12 @@ def editar_cuenta(id_cuenta):
                 'telefono':request.form.get('telefono_nuevo'),
                 'fecha_titular':fecha_norm
             }
+            dni_nuevo=usuarios_col.find_one({'dni':datos_cuenta['dni_titular']})
+            if not dni_nuevo:
+                flash('Usuario no registrado.')
+                return redirect(url_for('dashboard_empleado'))
+            
+            
             cuentas_col.update_one(
                 {'id_cuenta' : int(id_cuenta)},
                 {'$set' :

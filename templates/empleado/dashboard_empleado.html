@@ -27,6 +27,18 @@
       </div>
       {% endblock %}
     </div>
+    {% block contenido %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="message">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    {% endblock %}
     {% block main %}
     <div>
       <div>
