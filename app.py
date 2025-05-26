@@ -253,6 +253,17 @@ def efectivo():
 
                     flash('Operación de efectivo realizada correctamente')
                     return redirect(url_for('efectivo'))
+            
+            else:
+                # Actualizar saldos
+
+                cuentas_col.update_one(
+                    {'id_cuenta' : cuenta_id},
+                    {'$inc' : {'saldo' : +monto}}
+                )
+
+                flash('Operación de efectivo realizada correctamente')
+                return redirect(url_for('efectivo'))
         
         return render_template('usuario/efectivo.html', cuentas=cuentas_cliente)
     
