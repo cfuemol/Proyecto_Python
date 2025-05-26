@@ -16,6 +16,17 @@ transacciones_col = bd.obtener_colecciones('transaccion')
 
 @app.route('/', methods=['GET','POST'])
 def login():
+
+    if len(session) > 0:
+
+        if session['rol'] == 'admin':
+            return redirect(url_for('dashboard_admin'))
+        
+        elif session['rol'] == 'cliente':
+            return redirect(url_for('dashboard_cliente'))
+        
+        elif session['rol'] == 'empleado':
+            return redirect(url_for('dashboard_empleado'))    
     
     if request.method == 'POST':
         formulario = request.form.get('action')
