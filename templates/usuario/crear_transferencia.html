@@ -10,7 +10,17 @@
 
 {% block contenido %}
 
-<form method="POST" class="tarjeta_usuario">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="tarjeta_usuario">
         <label>Cuenta Destino:</label>
         <input type="text" name="cuenta_destino" value="{{ transfer.cuenta_destino }}" class="form-input" required>
 
@@ -22,12 +32,14 @@
 
         <label>Cuenta de Origen:</label>
         <select name="cuenta_origen" required class="form-input">
+        
             {% for cuenta in cuentas %}
-            <option value="{{ cuenta.id_cuenta}}">
-                Cuenta Nº {{ cuenta.id_cuenta }} — Saldo: {{ cuenta.saldo }} €
-            </option>
+                <option value="{{ cuenta.id_cuenta}}">
+                    Cuenta Nº {{ cuenta.id_cuenta }} — Saldo: {{ cuenta.saldo }} €
+                </option>
 
             {% endfor %}
+
         </select>
 
         <button type="submit" class="btn-editar">Guardar cambios</button>

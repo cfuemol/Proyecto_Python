@@ -9,6 +9,17 @@
 {% endblock %}
 
 {% block contenido %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
     <form method="POST" class="tarjeta_usuario">
         <label>Nombre:</label>
         <input type="text" name="nombre" value="{{ usuario.nombre }}" class="form-input" required>

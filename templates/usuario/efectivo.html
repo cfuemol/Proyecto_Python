@@ -1,0 +1,41 @@
+{% extends 'usuario/dashboard_cliente.html' %}
+
+{% block title_pag %}
+    <div class="div_title">
+        <div class="bienvenida">
+            Operaciones de efectivo
+        </div>
+    </div>
+{% endblock %}
+
+{% block contenido %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="tarjeta_usuario">
+            <label>Cuenta de Origen:</label>
+            <select name="cuenta_origen" required class="form-input">
+                {% for cuenta in cuentas %}
+                <option value="{{ cuenta.id_cuenta}}">
+                    Cuenta Nº {{ cuenta.id_cuenta }} — Saldo: {{ cuenta.saldo }} €
+                </option>
+
+                {% endfor %}
+            </select>
+
+            <label>Cantidad (Para retirada de efectivo, poner la cantidad en negativo):</label>
+            <input type="number" name="monto" step="0.01" class="form-input" required placeholder="Ejemplo: 22.75 / -22.75">
+
+            <button type="submit" class="btn-editar">Guardar cambios</button>
+            <a href="/dashboard_cliente" class="btn">Volver</a>
+        </form>
+
+{% endblock %}

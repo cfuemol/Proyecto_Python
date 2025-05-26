@@ -10,6 +10,16 @@
 
 {% block contenido %}
 
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
     <table class="table_info">
         <tr>
             <th>DNI</th>
@@ -33,7 +43,7 @@
             <td>{{ usuario.rol }}</td>
             <td>
                 <div>
-                    <a href="{{ url_for('admin_editar_usuario', user=usuario.dni, nombre=usuario.nombre, apellidos=usuario.apellidos) }}" class="btn-editar">Editar</a>
+                    <a href="{{ url_for('admin_editar_usuario', user=usuario.dni) }}" class="btn-editar">Editar</a>
                 </div>
                 <div>
                     <form action="{{ url_for('eliminar_usuario', user=usuario.dni) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
