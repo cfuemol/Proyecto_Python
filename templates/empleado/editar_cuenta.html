@@ -2,7 +2,11 @@
 {% extends 'empleado/dashboard_empleado.html' %}
 
 {% block titulo %} Editar {% endblock %}
-
+{% block header %} 
+<h1>Empleado: {{nombre}} {{apellidos}}</h1>
+<h2>Cliente: {{cliente_found['nombre']}} {{cliente_found['apellidos']}} </h2>
+<h3>Cuenta: ID {{id_cuenta}}</h3>
+{% endblock %}
 {% block main %}
 <h1>Cuenta Nº {{ id_cuenta }} </h1>
 <div>

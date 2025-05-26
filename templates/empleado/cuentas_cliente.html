@@ -2,7 +2,13 @@
 {% extends 'empleado/dashboard_empleado.html' %}
 
 {% block titulo %}Cuentas {% endblock %}
-
+{% block header %} 
+<div>
+    <h1>Empleado: {{nombre}} {{apellidos}}</h1>
+    <h2>Cliente: {{cliente_found['nombre']}} {{cliente_found['apellidos']}} </h2>
+    <h3>Cuenta: </h3>
+  </div>
+{% endblock %}
 {% block main %}
 <h1>Cuentas del Cliente con DNI {{cuentas[0]['dni_titular']}} </h1>
 <div>
@@ -14,7 +20,7 @@
                     <th> Cuenta Nº </th>
                     <th>ID Cuenta</th>
                     <th>Saldo</th>
-                    <th></th>
+                    <th>Gestión</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +43,10 @@
                 {% endfor %}
             </tbody>
             <tfoot>
+                <tr>
+                    <td colspan="2">Total de Saldo de Todas las Cuentas:</td>
+                    <td colspan="2">{{total_saldo}}</td>
+                </tr>
                 <tr>
                     <td colspan="4" ><a href="{{url_for('crear_cuenta', dni=cliente_found['dni'])}}" class="btn-editar">Crear Cuenta</a></td>
                 </tr>

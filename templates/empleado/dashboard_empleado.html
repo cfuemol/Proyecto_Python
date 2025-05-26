@@ -25,11 +25,13 @@
       <div class="img_tarjeta">
         
       </div>
+      {% block header %}
       <div>
-        <h1>Empleado: </h1>
-        <h1>Saldo:123567123000034720</h1>
-        <h2>usuario:</h2>
+        <h1>Empleado: {{nombre]}} {{apellidos}}</h1>
+        <h2>Cliente:  </h2>
+        <h3>Cuenta: </h3>
       </div>
+      {% endblock %}
     </div>
     {% block main %}
     <div>
@@ -56,7 +58,7 @@
                   <td>{{ cliente['email'] }}</td>
                   <td>{{ cliente['username'] }}</td>
                   <td>
-                    <button><a href="{{url_for('mostrar_cuentas',cliente=cliente['dni'])}}">Cuentas</a>  </button>
+                    <button><a href="{{url_for('mostrar_cuentas',cliente=cliente['dni'])}}" class="btn-editar">Cuentas</a>  </button>
                   </td>
                 </tr>
               {% endfor %}
