@@ -14,6 +14,7 @@
                     <th> Cuenta Nº </th>
                     <th>ID Cuenta</th>
                     <th>Saldo</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +28,7 @@
                                 <a href="{{ url_for('editar_cuenta', id_cuenta=cuenta['id_cuenta']) }}" class="btn-editar">Editar</a>
                             </div>
                             <div>
-                                <form action="{{ url_for('eliminar_cuenta', id_cuenta=cuenta['id_cuenta']) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta cuenta?');">
+                                <form action="{{ url_for('eliminar_cuenta', id_cuenta=cuenta['id_cuenta']) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta cuenta?');">
                                     <button type="submit" class="btn-submit">Eliminar</button>
                                 </form>
                             </div> 
@@ -37,7 +38,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td><a href="{{url_for('crear_cuenta', dni=cliente_found['dni'])}}">Crear Cuenta</a></td>
+                    <td colspan="4" ><a href="{{url_for('crear_cuenta', dni=cliente_found['dni'])}}" class="btn-editar">Crear Cuenta</a></td>
                 </tr>
             </tfoot>
            

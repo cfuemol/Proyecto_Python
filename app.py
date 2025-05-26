@@ -408,18 +408,18 @@ def editar_cuenta(id_cuenta):
         flash('Acceso no autorizado')
         return redirect(url_for('logout'))
 
-@app.route('/borrar_cuenta/<id_cuenta>')
+@app.route('/borrar_cuenta/<id_cuenta>',methods=['POST'])
 def eliminar_cuenta(id_cuenta):
 
-        if 'username' in session and session.get('rol') == 'empleado':
-            datos_cuenta = cuentas_col.find_one({'id_cuenta' :id_cuenta})
-            usuarios_col.delete_one({'id_cuenta' : id_cuenta})
-            flash('Usuario eliminado con éxito')
-            return redirect(url_for('mostrar_cuentas',cliente=datos_cuenta['dni_titular']))
+    if 'username' in session and session.get('rol') == 'empleado':
+        datos_cuenta = cuentas_col.find_one({'id_cuenta' :int(id_cuenta)})
+        cuentas_col.delete_one({'id_cuenta' : int(id_cuenta)})
+        flash('Cuenta eliminada con éxito')
+        return redirect(url_for('mostrar_cuentas',cliente=datos_cuenta['dni_titular']))
     
-        else:
-            flash('Acceso no autorizado')
-            return redirect(url_for('logout'))
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout'))
         
 # END POINT LOGOUT #
 
