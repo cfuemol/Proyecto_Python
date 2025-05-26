@@ -34,8 +34,8 @@ button{
   margin: auto;
   width: 30rem;
   height: 40rem;
-  background: #56a0c2;
-  color: #375577;
+  background: #292947;
+  color: white;
   padding: 1rem;
   border-radius: 0.5rem;
 }
@@ -47,8 +47,8 @@ button{
   margin: auto;
   width: 30rem;
   height: 20rem;
-  background: #56a0c2;
-  color: #375577;
+  background: #292947;
+  color: white;
   padding: 1rem;
   border-radius: 0.5rem;
 }
