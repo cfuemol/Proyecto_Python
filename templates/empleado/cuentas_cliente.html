@@ -4,10 +4,22 @@
 {% block titulo %}Cuentas {% endblock %}
 {% block header %} 
 <div>
-    <h1>Empleado: {{nombre}} {{apellidos}}</h1>
+    <h1>Empleado: {{user.nombre}} {{user.apellidos}}</h1>
     <h2>Cliente: {{cliente_found['nombre']}} {{cliente_found['apellidos']}} </h2>
     <h3>Cuenta: </h3>
   </div>
+{% endblock %}
+{% block contenido %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
 {% endblock %}
 {% block main %}
 <h1>Cuentas del Cliente con DNI {{cuentas[0]['dni_titular']}} </h1>

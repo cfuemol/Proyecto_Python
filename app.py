@@ -354,16 +354,16 @@ def eliminar_usuario(user):
 def dashboard_empleado():    
 
     if 'username' in session and session.get('rol') == 'empleado':
-        nombre=session.get('nombre')
-        apellidos=session.get('apellidos')
+        
         dni = session.get('dni')
+        user =usuarios_col.find_one({'dni':dni})
         usuarios = bd.lista_usuarios(usuarios_col)
         clientes = []
         for cliente in usuarios:
                 if cliente['rol'] == 'cliente':
                     clientes.append(cliente)
 
-        return render_template('empleado/dashboard_empleado.html',dni=dni,clientes = clientes,nombre=nombre,apellidos=apellidos)
+        return render_template('empleado/dashboard_empleado.html',dni=dni,clientes = clientes,user=user)
     
     else:
         flash('Acceso no autorizado')
@@ -373,8 +373,8 @@ def dashboard_empleado():
 def mostrar_cuentas(cliente):
     
     if 'username' in session and session.get('rol') == 'empleado':
-        nombre=session.get('nombre')
-        apellidos=session.get('apellidos')
+        dni = session.get('dni')
+        user =usuarios_col.find_one({'dni':dni})
         usuarios = bd.lista_usuarios(usuarios_col)
         cuentas = bd.lista_cuentas(cuentas_col)
         cuentas_cliente=[]
@@ -392,7 +392,7 @@ def mostrar_cuentas(cliente):
 
         for saldo in cuentas_cliente:
             total_saldo+=saldo['saldo']
-            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found,total_saldo=total_saldo,nombre=nombre,apellidos=apellidos)
+            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found,total_saldo=total_saldo,user=user)
         else:
             return render_template('404.html')
     
@@ -438,8 +438,8 @@ def crear_cuenta(dni):
 def editar_cuenta(id_cuenta):    
 
     if 'username' in session and session.get('rol') == 'empleado':
-        nombre=session.get('nombre')
-        apellidos=session.get('apellidos')
+        dni = session.get('dni')
+        user =usuarios_col.find_one({'dni':dni})
         if request.method == 'POST':
             
             fecha = date.today()
@@ -464,7 +464,7 @@ def editar_cuenta(id_cuenta):
         
         cuenta_cliente=cuentas_col.find_one({'id_cuenta':int(id_cuenta)})
         cliente_found=usuarios_col.find_one({'dni':cuenta_cliente['dni_titular']})
-        return render_template('empleado/editar_cuenta.html', id_cuenta=id_cuenta,cliente_found=cliente_found,nombre=nombre,apellidos=apellidos)
+        return render_template('empleado/editar_cuenta.html', id_cuenta=id_cuenta,cliente_found=cliente_found,user=user)
         
         
     else:

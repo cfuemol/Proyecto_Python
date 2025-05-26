@@ -3,10 +3,24 @@
 
 {% block titulo %} Editar {% endblock %}
 {% block header %} 
-<h1>Empleado: {{nombre}} {{apellidos}}</h1>
+<h1>Empleado: {{user.nombre}} {{user.apellidos}}</h1>
 <h2>Cliente: {{cliente_found['nombre']}} {{cliente_found['apellidos']}} </h2>
 <h3>Cuenta: ID {{id_cuenta}}</h3>
 {% endblock %}
+
+{% block contenido %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="message">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
 {% block main %}
 <h1>Cuenta Nº {{ id_cuenta }} </h1>
 <div>
