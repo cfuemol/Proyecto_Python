@@ -394,7 +394,6 @@ def mostrar_cuentas(cliente):
                 if cliente_found['dni'] ==cuenta['dni_titular']:
                     cuentas_cliente.append(cuenta)
                     total_saldo += cuenta['saldo']
-<<<<<<< Updated upstream
         
             if len(cuentas_cliente) > 0:
                 return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found,total_saldo=total_saldo,user=user)
@@ -403,12 +402,6 @@ def mostrar_cuentas(cliente):
                 flash('El usuario no tiene cuentas asignadas')
                 return redirect(url_for('dashboard_empleado'))
 
-=======
-            if len(cuentas_cliente) == 0:
-                nota='El cliente no tiene cuentas a su nombre.'
-                cuentas_cliente.append(nota)
-            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found,total_saldo=total_saldo,user=user)
->>>>>>> Stashed changes
         else:
             return render_template('404.html')
     
