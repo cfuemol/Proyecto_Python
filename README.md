@@ -4,7 +4,13 @@
 
 ## Definición del Proyecto
 
-Este Proyecto trata de hacer una aplicación que gestione las actividades de un banco; crear cuentas de clientes, gestionar los datos de los usuarios que pueden ser clientes, empleados o administrador, abrir cuentas bancarias a los clientes, ingresar o retirar dinero en una cuenta, realizar transacciones entre dos cuentas.
+Este Proyecto trata de hacer una aplicación que gestione las actividades de un banco:
+- Crear cuentas de clientes.
+- Crear usuarios.
+- Gestionar los datos de los usuarios que pueden ser clientes, empleados o administrador incluso poder cambiar su rol con la APP.
+- Abrir cuentas bancarias a los clientes.
+- Ingresar o retirar dinero en una cuenta.
+- Realizar transacciones entre dos cuentas.
 
 ## Programas Necesarios
 
