@@ -378,6 +378,7 @@ def mostrar_cuentas(cliente):
     if 'username' in session and session.get('rol') == 'empleado':
         dni = session.get('dni')
         user =usuarios_col.find_one({'dni':dni})
+
         usuarios = bd.lista_usuarios(usuarios_col)
         cuentas = bd.lista_cuentas(cuentas_col)
         cuentas_cliente=[]
@@ -394,7 +395,13 @@ def mostrar_cuentas(cliente):
                     cuentas_cliente.append(cuenta)
                     total_saldo += cuenta['saldo']
         
-            return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found,total_saldo=total_saldo,user=user)
+            if len(cuentas_cliente) > 0:
+                return render_template('empleado/cuentas_cliente.html', cuentas=cuentas_cliente,cliente_found=cliente_found,total_saldo=total_saldo,user=user)
+            
+            else:
+                flash('El usuario no tiene cuentas asignadas')
+                return redirect(url_for('dashboard_empleado'))
+
         else:
             return render_template('404.html')
     
