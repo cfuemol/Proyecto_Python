@@ -8,8 +8,12 @@ Usos de cada usuario:
 - Cliente: En la pantalla aparece la información del cliente, en el menú lateral tiene un botón para ir a la página de transferencias donde puede hacer transferencias entre cuentas, en el menú el icono de efectivo para retirar efectivo de una cuenta.
 
 ## Acceso y Navegación
+- En consola es necesario usar el siguiente comando:
+```bash
+python app.py
+```
 - URL de acceso: `http://localhost:5000`
-- Para loguearse en la página debes haberte registrado previamente, para ello pulsa en Don`t have a acount y rellenas los campos de registro, si es correcto al mandarte de nuevo a la pagina de login rellena los campos y navega por la página.
+- Para loguearse en la página debes haberte registrado previamente, para ello pulsa en Don`t have a account y rellenas los campos de registro, si es correcto al mandarte de nuevo a la pagina de login rellena los campos y navega por la página.
 
 ## Funcionalidades CRUD
 ### Crear
@@ -25,7 +29,7 @@ Usos de cada usuario:
 ### Actualizar
 - El usuario administrador puede actualizar la información de un usuario cambiando el nombre, apellidos y/o rol del usuario.
 - El usuario empleado puede actualizar la información de la cuenta de un usuario cambiando el dni del titular o el teléfono.
-- El usuario cliente puede actualizar información de sus propias cuentas retirando efectivo de la que elija.
+- El usuario cliente puede actualizar saldos de sus propias cuentas retirando efectivo de la que elija.
 
 ### Eliminar
 - El usuario administrador puede eliminar las cuentas de usuarios.
@@ -33,12 +37,11 @@ Usos de cada usuario:
 
 ## Preguntas Frecuentes (FAQ)
 - Compatibilidad con sistemas Operativos.
-    La aplicación es compatible con todos los sistemas operativos, tanto windows como linux.
+    La aplicación es compatible con todos los sistemas operativos, tanto Windows, Linux o MacOS.
 - Conexión a Internet.
     Se necesita conexión a Internet para que la base de datos se conecte correctamente, en futuras versiones se implementará una base de datos de forma local.
 - Actualización de datos de cliente. 
     Los datos de acceso a la base de datos se le proporcionará al cliente para que actualice sus datos de acceso y configurar la aplicación con esos datos.
-
 
 ## Consejos y Advertencias
 - La aplicación web está optimizada para navegadores con base chromium.
