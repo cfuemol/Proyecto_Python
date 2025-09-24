@@ -2,7 +2,7 @@
 
 # Notas de uso de la Aplicación
 
-## Definición del Proyecto
+## Descripción del Proyecto
 
 Este Proyecto trata de hacer una aplicación que gestione las actividades de un banco:
 - Crear cuentas de clientes.
@@ -11,20 +11,69 @@ Este Proyecto trata de hacer una aplicación que gestione las actividades de un 
 - Abrir cuentas bancarias a los clientes.
 - Ingresar o retirar dinero en una cuenta.
 - Realizar transacciones entre dos cuentas.
+- El proyecto está pensado para suministrar al cliente todo lo necesario para su funcionamiento tanto la app como la base de datos MongoDB con la cuenta ya creada yconfigurada.
 
 ## Programas Necesarios
 
-- Tener instalado python 3.12.
-- Instalar Visual Studio Code como entorno de desarrollo.
-- Tener instalado un navegador web para ver el resultado de la página web.
-- Tener instalado una aplicación del estilo de Github Desktop para tener un control de versiones.
-- Tener una cuenta en la página web de Github para crear el repositorio donde vamos a trabajar y clonarlo a tu pc con github desktop.
+- [Python](https://www.python.org/).
+- [Flask](https://flask.palletsprojects.com/)
+- [MongoDB](https://https://www.mongodb.com/products/tools/compass)
 
-## Instrucciones
-    
-- Tener instalado Python 3.12
-- Crear una cuenta en la página de github y crear el repositorio para tu proyecto.
-- Abrir la aplicación de github desktop y clonar el proyecto de tu repositorio de github.
-- Abrir la carpeta de tu repositorio con Pycharm y descargar las dependencias necesarias para empezar a trabajar.(flask entre otras. Para ello utilizaremos el comando pip install requirements.txt)
-- Desarrolla el proyecto para crear la página web con python comprobando el resultado en tu navegador web con el servidor local que te proporciona en la ruta "/"(raiz).
-    
+## Estructura del Proyecto
+```
+/Proyecto_Python
+├─ models/
+├   └─ database.py
+├─ static/
+├   ├─ styles_base.css
+├   └─ styles_register.css
+├─ templates/
+├   ├─ admin/
+├   ├  ├─ admin_users.html
+├   ├  ├─ dashboard_admin.html
+├   ├  └─ editar_usuario.html
+├   ├─ empleado/
+├   ├   ├─ cuentas_cliente.html
+├   ├   ├─ dashboard_empleado.html
+├   ├   └─ edtar_cuenta.html
+├   ├─ usuario/
+├   ├   ├─ crear_transferencia.html
+├   ├   ├─ dashboard_cliente.html
+├   ├   ├─ efectivo.html
+├   ├   └─ transferencia.html
+├   ├─ 404.html
+├   └─ register.html
+├─ .env
+├─ app.py
+├─ README.md
+├─ requirements.txt
+└─ docs/
+    ├─ ManualDeUsuario.md
+    └─ DocumentacionTecnica.md
+```
+
+## Instalación del Entorno de Desarrollo
+```bash
+# Crear entorno virtual
+python3 -m venv venv
+# Activar entorno virtual
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate    # Windows
+# Instalar dependencias
+pip install -r requirements.txt
+```
+
+## Ejecución Local de la Aplicación
+```bash
+python app.py
+```
+
+## Créditos y Contacto
+
+Autores:
+- José Ignacio Barranco Ruiz.
+- Cristóbal Fuentes Molina.
+
+Contacto:
+- jbarrui587@g.educaand.es
+- cfuemol584@g.educaand.es
