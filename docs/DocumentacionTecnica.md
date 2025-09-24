@@ -3,17 +3,19 @@
 ## Arquitectura Interna
 <!-- Explicación de rutas, modelos y flujos -->
 
-1. Login/Register
-    - En este
-2. Dashboard_Cliente
-3. Dashboard_Empleado
-4. Dashboard_Administrador
-5. Logout
+### Diagrama de flujo
 
+<img src = "./Diagrama.png" alt="Diagrama de flujo"/>
 
 
 ## Configuración y Conexión con MongoDB
 <!-- Instrucciones para crear la base de datos y conectar la app -->
+
+- La app provee al usuario final de una cuenta en MongoDB para gestionar la Base de Datos.
+- Los datos de configuración y acceso a la BBDD estarán incluidos en las variables de entorno.
+- Cuando la app arranca por primera vez: 
+    - Se crea la BBDD con las colecciones (tablas) necesarias.
+    - Se crea un usuario administrador para poder acceder la APP con privilegios, cuya contraseña se encripta.
 
 ## Endpoints
 | Ruta                          |Método             |Parámetros                     |Respuesta          |Descripción                            |
@@ -34,14 +36,50 @@
 
 ## Fragmentos de Código de Ejemplo
 ```python
-# Ejemplo de ruta en Flask
-@app.route('/')
-def index():
-    return render_template('index.html')
+# Ruta al dashboard del cliente una vez inicia la sesión
+@app.route('/dashboard_cliente')
+def dashboard_cliente():    
+   
+    if 'username' in session and session.get('rol') == 'cliente':
+        dni = session.get('dni')
+
+        # Sacar nombre y apellidos desde la lista de usuarios
+
+        lista_usuarios = bd.lista_usuarios(usuarios_col)
+
+        for usuario in lista_usuarios:
+            if usuario['dni'] == dni:
+                nombre = usuario['nombre']
+                apellidos = usuario['apellidos']
+
+        cuentas_cliente = []
+        saldo_total = 0.0
+
+        cuentas = bd.lista_cuentas(cuentas_col)
+
+        for cuenta in cuentas:
+            if cuenta['dni_titular'] == dni:
+                cuentas_cliente.append(cuenta)
+                saldo_total += float(cuenta['saldo'])
+                saldo_total = round(saldo_total,2)
+
+        return render_template('usuario/dashboard_cliente.html',nombre=nombre,apellidos=apellidos,cuentas_cliente=cuentas_cliente,num_cuentas=len(cuentas_cliente),saldo_total=saldo_total)
+    
+    else:
+        flash('Acceso no autorizado')
+        return redirect(url_for('logout'))
 ```
 
 ## Notas Técnicas
 <!-- Comentarios HTML y aclaraciones técnicas -->
+
+<!---   - Se ha implementado un sistema de encriptación de contraseñas, las cuales se almacenan ya encriptadas en la BBDD
+        - La encriptación y desencriptado de contraseñas se realizan mediante hash de 256 bits
+        - Cuando se introducen registros en la BBDD se hacen las comprobaciones pertinentes para que no haya duplicidades
+        - Dado que MongoDB es muy laxa en la asignación de Primary Key y Foreign Key, se han implementado métodos para permitir dichas operaciones
+        - Dentro de las comprobaciones de los datos,se tienen en cuenta los posibles errores a la hora de introducir los tipos de datos necesario
+        - La elección de una clase llamada Base de datos es fundamental para facilitar las operaciones con la misma
+>
 
 ## Referencias
 <!-- Enlaces internos y externos relevantes -->
